@@ -2209,6 +2209,4 @@ Wire Wire Line
 Connection ~ 5525 5000
 Wire Wire Line
 	5525 5000 5525 5100
-Wire Wire Line
-	7150 5200 7300 5200
 $EndSCHEMATC
