@@ -1,0 +1,4 @@
+(sym_lib_table
+  (lib (name VehicleAccessoryController)(type Legacy)(uri /home/ops/Documents/VehicleAccessoryController/hardware/lib/VehicleAccessoryController.lib)(options "")(descr ""))
+  (lib (name Tag-Connect)(type Legacy)(uri /home/ops/Documents/VehicleAccessoryController/hardware/lib/Tag-Connect.lib)(options "")(descr ""))
+)
