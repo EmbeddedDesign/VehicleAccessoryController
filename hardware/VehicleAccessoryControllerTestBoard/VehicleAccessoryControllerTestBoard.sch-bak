@@ -6,7 +6,7 @@ $Descr A 11000 8500
 encoding utf-8
 Sheet 1 1
 Title "Vehicle Accessory Controller Test Board"
-Date "2019-11-14"
+Date "2019-11-15"
 Rev "0.0"
 Comp "Noctivore"
 Comment1 "IF IN DOUBT - ASK"
@@ -1652,11 +1652,26 @@ U 1 1 5DCEE74B
 P 1675 3025
 F 0 "J508" H 1800 3450 50  0000 C CNN
 F 1 "Conn_01x08_Male" V 1625 2975 50  0000 C CNN
-F 2 "Connector_PinSocket_2.54mm:PinSocket_1x08_P2.54mm_Vertical" H 1675 3025 50  0001 C CNN
+F 2 "Connector_PinHeader_2.54mm:PinHeader_1x08_P2.54mm_Vertical" H 1675 3025 50  0001 C CNN
 F 3 "~" H 1675 3025 50  0001 C CNN
 	1    1675 3025
 	-1   0    0    -1  
 $EndComp
 Wire Wire Line
 	1475 2725 1325 2725
+$Comp
+L Connector:TestPoint TP1
+U 1 1 5DD0862F
+P 8950 6400
+F 0 "TP1" V 8875 6475 50  0000 L CNN
+F 1 "TestPoint" V 9025 6375 50  0000 L CNN
+F 2 "TestPoint:TestPoint_Pad_1.0x1.0mm" H 9150 6400 50  0001 C CNN
+F 3 "~" H 9150 6400 50  0001 C CNN
+	1    8950 6400
+	0    1    1    0   
+$EndComp
+Text Label 8800 6400 2    50   ~ 0
+328P_RESET
+Wire Wire Line
+	8800 6400 8950 6400
 $EndSCHEMATC
