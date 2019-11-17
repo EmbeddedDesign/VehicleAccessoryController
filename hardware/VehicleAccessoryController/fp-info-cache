@@ -1,4 +1,4 @@
-16338133789931446
+16339711644838446
 Battery
 BatteryHolder_Bulgin_BX0036_1xC
 Bulgin Battery Holder, BX0036, Battery Type C (https://www.bulgin.com/products/pub/media/bulgin/data/Battery_holders.pdf)
@@ -73058,6 +73058,13 @@ SOIC-8_NB
 0
 8
 8
+VehicleAccessoryController
+TE_1776275-3
+
+
+0
+0
+0
 VehicleAccessoryController
 TI DSE (S-PWSON-N6)
 

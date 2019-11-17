@@ -288,7 +288,7 @@ U 1 1 5DB225D1
 P 10175 1050
 F 0 "J502" H 10050 1250 50  0000 L CNN
 F 1 "Front Conn" V 10275 850 50  0000 L CNN
-F 2 "VehicleAccessoryController:Keystone_8719" H 10175 1050 50  0001 C CNN
+F 2 "VehicleAccessoryController:TE_1776275-3" H 10175 1050 50  0001 C CNN
 F 3 "~" H 10175 1050 50  0001 C CNN
 	1    10175 1050
 	1    0    0    -1  
@@ -299,7 +299,7 @@ U 1 1 5DB2275A
 P 10175 2550
 F 0 "J503" H 10050 2750 50  0000 L CNN
 F 1 "Rear Conn" V 10275 2375 50  0000 L CNN
-F 2 "VehicleAccessoryController:Keystone_8719" H 10175 2550 50  0001 C CNN
+F 2 "VehicleAccessoryController:TE_1776275-3" H 10175 2550 50  0001 C CNN
 F 3 "~" H 10175 2550 50  0001 C CNN
 	1    10175 2550
 	1    0    0    -1  
@@ -310,7 +310,7 @@ U 1 1 5DB22852
 P 10175 4050
 F 0 "J504" H 10050 4250 50  0000 L CNN
 F 1 "Left Conn" V 10275 3875 50  0000 L CNN
-F 2 "VehicleAccessoryController:Keystone_8719" H 10175 4050 50  0001 C CNN
+F 2 "VehicleAccessoryController:TE_1776275-3" H 10175 4050 50  0001 C CNN
 F 3 "~" H 10175 4050 50  0001 C CNN
 	1    10175 4050
 	1    0    0    -1  
@@ -321,7 +321,7 @@ U 1 1 5DB228A6
 P 10175 5550
 F 0 "J505" H 10050 5750 50  0000 L CNN
 F 1 "Right Conn" V 10275 5325 50  0000 L CNN
-F 2 "VehicleAccessoryController:Keystone_8719" H 10175 5550 50  0001 C CNN
+F 2 "VehicleAccessoryController:TE_1776275-3" H 10175 5550 50  0001 C CNN
 F 3 "~" H 10175 5550 50  0001 C CNN
 	1    10175 5550
 	1    0    0    -1  
