@@ -1,12 +1,11 @@
 EESchema Schematic File Version 4
-LIBS:VehicleAccessoryControllerTestBoard-cache
 EELAYER 30 0
 EELAYER END
 $Descr A 11000 8500
 encoding utf-8
 Sheet 1 1
 Title "Vehicle Accessory Controller Test Board"
-Date "2019-11-15"
+Date "2019-11-22"
 Rev "0.0"
 Comp "Noctivore"
 Comment1 "IF IN DOUBT - ASK"
@@ -1220,7 +1219,7 @@ L Device:R R732
 U 1 1 5DF513E5
 P 3900 5450
 F 0 "R732" H 3975 5400 50  0000 L CNN
-F 1 "47.5k" H 3975 5500 50  0000 L CNN
+F 1 "47k5" H 3975 5500 50  0000 L CNN
 F 2 "VehicleAccessoryController:R_0603" V 3830 5450 50  0001 C CNN
 F 3 "~" H 3900 5450 50  0001 C CNN
 	1    3900 5450
@@ -1233,7 +1232,7 @@ L Device:R R731
 U 1 1 5DF6578F
 P 3900 5050
 F 0 "R731" H 3975 5000 50  0000 L CNN
-F 1 "22.1k" H 3975 5100 50  0000 L CNN
+F 1 "22k1" H 3975 5100 50  0000 L CNN
 F 2 "VehicleAccessoryController:R_0603" V 3830 5050 50  0001 C CNN
 F 3 "~" H 3900 5050 50  0001 C CNN
 	1    3900 5050

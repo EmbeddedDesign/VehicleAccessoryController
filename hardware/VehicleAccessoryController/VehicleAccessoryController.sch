@@ -5,7 +5,7 @@ $Descr A 11000 8500
 encoding utf-8
 Sheet 1 1
 Title "Vehicle Accessory Controller"
-Date "2019-11-20"
+Date "2019-11-22"
 Rev "0.1"
 Comp "Noctivore"
 Comment1 "IF IN DOUBT - ASK"
@@ -1940,17 +1940,6 @@ $EndComp
 Wire Wire Line
 	5400 5575 5400 5475
 NoConn ~ 5400 5975
-$Comp
-L Device:R R732
-U 1 1 5DF513E5
-P 3775 4500
-F 0 "R732" H 3850 4450 50  0000 L CNN
-F 1 "47.5k" H 3850 4550 50  0000 L CNN
-F 2 "VehicleAccessoryController:R_0603" V 3705 4500 50  0001 C CNN
-F 3 "~" H 3775 4500 50  0001 C CNN
-	1    3775 4500
-	-1   0    0    1   
-$EndComp
 Wire Wire Line
 	3775 4650 3775 4725
 $Comp
@@ -1958,7 +1947,7 @@ L Device:R R731
 U 1 1 5DF6578F
 P 3775 4100
 F 0 "R731" H 3850 4050 50  0000 L CNN
-F 1 "22.1k" H 3850 4150 50  0000 L CNN
+F 1 "22k1" H 3850 4150 50  0000 L CNN
 F 2 "VehicleAccessoryController:R_0603" V 3705 4100 50  0001 C CNN
 F 3 "~" H 3775 4100 50  0001 C CNN
 	1    3775 4100
@@ -2405,5 +2394,16 @@ F 2 "" H 2175 7375 50  0001 C CNN
 F 3 "" H 2175 7375 50  0001 C CNN
 	1    2175 7375
 	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R732
+U 1 1 5DF513E5
+P 3775 4500
+F 0 "R732" H 3850 4450 50  0000 L CNN
+F 1 "47k5" H 3850 4550 50  0000 L CNN
+F 2 "VehicleAccessoryController:R_0603" V 3705 4500 50  0001 C CNN
+F 3 "~" H 3775 4500 50  0001 C CNN
+	1    3775 4500
+	-1   0    0    1   
 $EndComp
 $EndSCHEMATC
