@@ -6,10 +6,22 @@ K USB UART bridge
 F http://www.silabs.com/support%20documents/technicaldocs/cp2102n-datasheet.pdf
 $ENDCMP
 #
+$CMP NCV551SN50T1G
+D 150mA Low Dropout Voltage Regulator, Fixed Output 5V, SOT-23-5
+K 150mA LDO Regulator Fixed Positive
+F https://www.onsemi.com/pub/Collateral/NCP551-D.PDF
+$ENDCMP
+#
 $CMP Si8621BB-B-IS
 D Low-Power Dual-Channel Digital Isolator, 150Mbps, 2.5-5.5V, 2.5kV isolation, Fail-Safe Low, SOIC-8
-K 4Ch 2In 2Out Quad Digital Isolator 150Mbps
+K 2Ch 1In 1Out Quad Digital Isolator 150Mbps
 F https://www.silabs.com/documents/public/data-sheets/si861x-2x-datasheet.pdf
+$ENDCMP
+#
+$CMP Si8631EC-B-IS1
+D Low-Power Tripple-Channel Digital Isolator, 150Mbps, 2.5-5.5V, 3.75kV isolation, Fail-Safe High, NB SOIC-16
+K 3Ch 2In 1Out Tripple Digital Isolator 150Mbps
+F https://www.silabs.com/documents/public/data-sheets/si863x-datasheet.pdf
 $ENDCMP
 #
 #End Doc Library
