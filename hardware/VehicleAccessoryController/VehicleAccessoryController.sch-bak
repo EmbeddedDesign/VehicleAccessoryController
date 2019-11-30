@@ -5,7 +5,7 @@ $Descr A 11000 8500
 encoding utf-8
 Sheet 1 1
 Title "Vehicle Accessory Controller"
-Date "2019-11-23"
+Date "2019-11-29"
 Rev "0.1"
 Comp "Noctivore"
 Comment1 "IF IN DOUBT - ASK"
@@ -1525,7 +1525,7 @@ Wire Wire Line
 Text Label 2650 5400 0    50   ~ 0
 ACC
 Text Label 3075 6150 2    50   ~ 0
-ACC
+ACC_OUT
 $Comp
 L Device:R R725
 U 1 1 5DCA412C
@@ -1904,16 +1904,14 @@ Wire Wire Line
 $Comp
 L Device:C C811
 U 1 1 5DDADB58
-P 7475 5675
-F 0 "C811" V 7625 5575 50  0000 L CNN
-F 1 "0.1uF" V 7700 5575 50  0000 L CNN
-F 2 "VehicleAccessoryController:C_0603" H 7513 5525 50  0001 C CNN
-F 3 "~" H 7475 5675 50  0001 C CNN
-	1    7475 5675
-	0    1    1    0   
+P 7000 3800
+F 0 "C811" H 7100 3850 50  0000 L CNN
+F 1 "0.1uF" H 7100 3775 50  0000 L CNN
+F 2 "VehicleAccessoryController:C_0603" H 7038 3650 50  0001 C CNN
+F 3 "~" H 7000 3800 50  0001 C CNN
+	1    7000 3800
+	1    0    0    -1  
 $EndComp
-Wire Wire Line
-	7700 5675 7625 5675
 NoConn ~ 7175 5875
 NoConn ~ 7175 5975
 Wire Wire Line
@@ -2116,29 +2114,29 @@ $EndComp
 $Comp
 L Device:C C813
 U 1 1 5DD89F06
-P 7325 3925
-F 0 "C813" H 7450 3975 50  0000 L CNN
-F 1 "0.1uF" H 7450 3900 50  0000 L CNN
-F 2 "VehicleAccessoryController:C_0603" H 7363 3775 50  0001 C CNN
-F 3 "~" H 7325 3925 50  0001 C CNN
-	1    7325 3925
+P 7725 3925
+F 0 "C813" H 7850 3975 50  0000 L CNN
+F 1 "0.1uF" H 7850 3900 50  0000 L CNN
+F 2 "VehicleAccessoryController:C_0603" H 7763 3775 50  0001 C CNN
+F 3 "~" H 7725 3925 50  0001 C CNN
+	1    7725 3925
 	1    0    0    -1  
 $EndComp
 $Comp
 L power:GND #PWR0174
 U 1 1 5DD89F1A
-P 7325 4150
-F 0 "#PWR0174" H 7325 3900 50  0001 C CNN
-F 1 "GND" H 7330 3977 50  0000 C CNN
-F 2 "" H 7325 4150 50  0001 C CNN
-F 3 "" H 7325 4150 50  0001 C CNN
-	1    7325 4150
+P 7725 4150
+F 0 "#PWR0174" H 7725 3900 50  0001 C CNN
+F 1 "GND" H 7730 3977 50  0000 C CNN
+F 2 "" H 7725 4150 50  0001 C CNN
+F 3 "" H 7725 4150 50  0001 C CNN
+	1    7725 4150
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	7325 3700 7325 3775
+	7725 3700 7725 3775
 Wire Wire Line
-	7325 4075 7325 4150
+	7725 4075 7725 4150
 $Comp
 L Device:C C812
 U 1 1 5DDC0899
@@ -2291,12 +2289,12 @@ $EndComp
 $Comp
 L power:+5VD #PWR0144
 U 1 1 5DDE8D2C
-P 7325 3700
-F 0 "#PWR0144" H 7325 3550 50  0001 C CNN
-F 1 "+5VD" H 7340 3873 50  0000 C CNN
-F 2 "" H 7325 3700 50  0001 C CNN
-F 3 "" H 7325 3700 50  0001 C CNN
-	1    7325 3700
+P 7725 3700
+F 0 "#PWR0144" H 7725 3550 50  0001 C CNN
+F 1 "+5VD" H 7740 3873 50  0000 C CNN
+F 2 "" H 7725 3700 50  0001 C CNN
+F 3 "" H 7725 3700 50  0001 C CNN
+	1    7725 3700
 	1    0    0    -1  
 $EndComp
 $Comp
@@ -2419,14 +2417,12 @@ Wire Wire Line
 	6800 3875 6800 3775
 Connection ~ 6800 3775
 Wire Wire Line
-	6800 3975 6650 3975
-Wire Wire Line
 	5500 3975 5650 3975
-Text Label 6800 3975 0    50   ~ 0
+Text Label 7150 3600 0    50   ~ 0
 328P_RST
 Text Label 5500 3975 2    50   ~ 0
 CP2102N_RST
-Text Label 7700 5675 0    50   ~ 0
+Text Label 7325 5675 0    50   ~ 0
 CP2102N_RST
 Text Label 6775 875  0    50   ~ 0
 328P_RST
@@ -2533,4 +2529,14 @@ F 3 "" H 7275 1600 50  0001 C CNN
 	1    7275 1600
 	1    0    0    -1  
 $EndComp
+Wire Wire Line
+	6650 3975 7000 3975
+Wire Wire Line
+	7000 3975 7000 3950
+Wire Wire Line
+	7000 3650 7000 3600
+Wire Wire Line
+	7000 3600 7150 3600
+Text Label 2575 5800 2    50   ~ 0
+ACC_OUT
 $EndSCHEMATC

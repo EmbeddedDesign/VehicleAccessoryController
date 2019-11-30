@@ -5,7 +5,7 @@ $Descr A 11000 8500
 encoding utf-8
 Sheet 1 1
 Title "Vehicle Accessory Controller Test Board"
-Date "2019-11-22"
+Date "2019-11-29"
 Rev "0.0"
 Comp "Noctivore"
 Comment1 "IF IN DOUBT - ASK"
@@ -809,7 +809,7 @@ Wire Wire Line
 Text Label 2775 3750 0    50   ~ 0
 ACC
 Text Label 1775 5625 2    50   ~ 0
-ACC
+ACC_OUT
 $Comp
 L Device:R R725
 U 1 1 5DCA412C
@@ -1274,7 +1274,7 @@ Wire Wire Line
 Wire Wire Line
 	9275 5150 9425 5150
 $Comp
-L VehicleAccessoryController:Si8621BB-B-IS U106
+L VehicleAccessoryControllerTestBoard-rescue:Si8621BB-B-IS-VehicleAccessoryController U106
 U 1 1 5DC8033B
 P 5550 3675
 F 0 "U106" H 5200 3975 50  0000 C CNN
@@ -1673,4 +1673,6 @@ F 3 "" H 5850 7275 50  0001 C CNN
 	1    5850 7275
 	1    0    0    -1  
 $EndComp
+Text Label 2700 4150 2    50   ~ 0
+ACC_OUT
 $EndSCHEMATC

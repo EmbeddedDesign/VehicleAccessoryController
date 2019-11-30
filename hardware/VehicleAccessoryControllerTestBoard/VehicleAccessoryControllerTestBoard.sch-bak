@@ -1219,7 +1219,7 @@ L Device:R R732
 U 1 1 5DF513E5
 P 3900 5450
 F 0 "R732" H 3975 5400 50  0000 L CNN
-F 1 "47.5k" H 3975 5500 50  0000 L CNN
+F 1 "47k5" H 3975 5500 50  0000 L CNN
 F 2 "VehicleAccessoryController:R_0603" V 3830 5450 50  0001 C CNN
 F 3 "~" H 3900 5450 50  0001 C CNN
 	1    3900 5450
@@ -1274,7 +1274,7 @@ Wire Wire Line
 Wire Wire Line
 	9275 5150 9425 5150
 $Comp
-L VehicleAccessoryController:Si8621BB-B-IS U106
+L VehicleAccessoryControllerTestBoard-rescue:Si8621BB-B-IS-VehicleAccessoryController U106
 U 1 1 5DC8033B
 P 5550 3675
 F 0 "U106" H 5200 3975 50  0000 C CNN

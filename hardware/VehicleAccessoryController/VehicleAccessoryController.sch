@@ -5,7 +5,7 @@ $Descr A 11000 8500
 encoding utf-8
 Sheet 1 1
 Title "Vehicle Accessory Controller"
-Date "2019-11-23"
+Date "2019-11-29"
 Rev "0.1"
 Comp "Noctivore"
 Comment1 "IF IN DOUBT - ASK"
@@ -208,7 +208,7 @@ U 1 1 5DB1219C
 P 1050 900
 F 0 "F401" V 1200 825 50  0000 L CNN
 F 1 "Fuse" V 1125 825 50  0000 L CNN
-F 2 "VehicleAccessoryController:Littelfuse_01530007" V 980 900 50  0001 C CNN
+F 2 "VehicleAccessoryController:Keystone_3587" V 980 900 50  0001 C CNN
 F 3 "~" H 1050 900 50  0001 C CNN
 	1    1050 900 
 	0    -1   -1   0   
@@ -1525,7 +1525,7 @@ Wire Wire Line
 Text Label 2650 5400 0    50   ~ 0
 ACC
 Text Label 3075 6150 2    50   ~ 0
-ACC
+ACC_OUT
 $Comp
 L Device:R R725
 U 1 1 5DCA412C
@@ -2537,4 +2537,6 @@ Wire Wire Line
 	7000 3650 7000 3600
 Wire Wire Line
 	7000 3600 7150 3600
+Text Label 2575 5800 2    50   ~ 0
+ACC_OUT
 $EndSCHEMATC
