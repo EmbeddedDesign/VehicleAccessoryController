@@ -1,3 +1,0 @@
-Add 5V LDO
-Move to 3-Channel Isolator
-Order remaining/new parts and cable
