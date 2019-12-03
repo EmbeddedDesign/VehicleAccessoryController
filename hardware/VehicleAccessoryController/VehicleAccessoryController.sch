@@ -5,7 +5,7 @@ $Descr A 11000 8500
 encoding utf-8
 Sheet 1 1
 Title "Vehicle Accessory Controller"
-Date "2019-11-29"
+Date "2019-12-03"
 Rev "0.1"
 Comp "Noctivore"
 Comment1 "IF IN DOUBT - ASK"
@@ -49,12 +49,12 @@ $EndComp
 $Comp
 L VehicleAccessoryController:FID fid1
 U 1 1 5DAF80EF
-P 7825 825
-F 0 "fid1" H 7775 975 60  0000 L CNN
-F 1 "FID" H 7775 675 60  0000 L CNN
-F 2 "VehicleAccessoryController:Fiducial" H 7825 825 60  0001 C CNN
-F 3 "" H 7825 825 60  0001 C CNN
-	1    7825 825 
+P 4825 7750
+F 0 "fid1" H 4775 7900 60  0000 L CNN
+F 1 "FID" H 4775 7600 60  0000 L CNN
+F 2 "VehicleAccessoryController:Fiducial" H 4825 7750 60  0001 C CNN
+F 3 "" H 4825 7750 60  0001 C CNN
+	1    4825 7750
 	1    0    0    -1  
 $EndComp
 $Comp
@@ -216,23 +216,23 @@ $EndComp
 $Comp
 L VehicleAccessoryController:FID fid2
 U 1 1 5DB12261
-P 8175 825
-F 0 "fid2" H 8125 975 60  0000 L CNN
-F 1 "FID" H 8125 675 60  0000 L CNN
-F 2 "VehicleAccessoryController:Fiducial" H 8175 825 60  0001 C CNN
-F 3 "" H 8175 825 60  0001 C CNN
-	1    8175 825 
+P 5175 7750
+F 0 "fid2" H 5125 7900 60  0000 L CNN
+F 1 "FID" H 5125 7600 60  0000 L CNN
+F 2 "VehicleAccessoryController:Fiducial" H 5175 7750 60  0001 C CNN
+F 3 "" H 5175 7750 60  0001 C CNN
+	1    5175 7750
 	1    0    0    -1  
 $EndComp
 $Comp
 L VehicleAccessoryController:FID fid3
 U 1 1 5DB12492
-P 8525 825
-F 0 "fid3" H 8475 975 60  0000 L CNN
-F 1 "FID" H 8475 675 60  0000 L CNN
-F 2 "VehicleAccessoryController:Fiducial" H 8525 825 60  0001 C CNN
-F 3 "" H 8525 825 60  0001 C CNN
-	1    8525 825 
+P 5525 7750
+F 0 "fid3" H 5475 7900 60  0000 L CNN
+F 1 "FID" H 5475 7600 60  0000 L CNN
+F 2 "VehicleAccessoryController:Fiducial" H 5525 7750 60  0001 C CNN
+F 3 "" H 5525 7750 60  0001 C CNN
+	1    5525 7750
 	1    0    0    -1  
 $EndComp
 $Comp
@@ -2539,4 +2539,52 @@ Wire Wire Line
 	7000 3600 7150 3600
 Text Label 2575 5800 2    50   ~ 0
 ACC_OUT
+$Comp
+L Mechanical:MountingHole_Pad H1
+U 1 1 5DFA9925
+P 7800 850
+F 0 "H1" H 7900 900 50  0000 L CNN
+F 1 "Mounting_Hole" H 7525 1025 50  0000 L CNN
+F 2 "VehicleAccessoryController:Mounting_Hole" H 7800 850 50  0001 C CNN
+F 3 "~" H 7800 850 50  0001 C CNN
+	1    7800 850 
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GNDA #PWR0185
+U 1 1 5DFB2820
+P 7800 975
+F 0 "#PWR0185" H 7800 725 50  0001 C CNN
+F 1 "GNDA" H 7805 802 50  0000 C CNN
+F 2 "" H 7800 975 50  0001 C CNN
+F 3 "" H 7800 975 50  0001 C CNN
+	1    7800 975 
+	1    0    0    -1  
+$EndComp
+$Comp
+L Mechanical:MountingHole_Pad H2
+U 1 1 5DFD86D5
+P 8500 850
+F 0 "H2" H 8300 900 50  0000 L CNN
+F 1 "Mounting_Hole" H 8225 1025 50  0000 L CNN
+F 2 "VehicleAccessoryController:Mounting_Hole" H 8500 850 50  0001 C CNN
+F 3 "~" H 8500 850 50  0001 C CNN
+	1    8500 850 
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GNDA #PWR0186
+U 1 1 5DFDBE49
+P 8500 975
+F 0 "#PWR0186" H 8500 725 50  0001 C CNN
+F 1 "GNDA" H 8505 802 50  0000 C CNN
+F 2 "" H 8500 975 50  0001 C CNN
+F 3 "" H 8500 975 50  0001 C CNN
+	1    8500 975 
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	7800 950  7800 975 
+Wire Wire Line
+	8500 950  8500 975 
 $EndSCHEMATC

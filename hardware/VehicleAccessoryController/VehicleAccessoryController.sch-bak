@@ -208,7 +208,7 @@ U 1 1 5DB1219C
 P 1050 900
 F 0 "F401" V 1200 825 50  0000 L CNN
 F 1 "Fuse" V 1125 825 50  0000 L CNN
-F 2 "VehicleAccessoryController:Littelfuse_01530007" V 980 900 50  0001 C CNN
+F 2 "VehicleAccessoryController:Keystone_3587" V 980 900 50  0001 C CNN
 F 3 "~" H 1050 900 50  0001 C CNN
 	1    1050 900 
 	0    -1   -1   0   
