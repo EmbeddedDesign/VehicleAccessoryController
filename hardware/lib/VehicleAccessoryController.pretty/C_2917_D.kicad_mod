@@ -1,4 +1,4 @@
-(module C_2917_D (layer F.Cu) (tedit 5DBA16E4)
+(module C_2917_D (layer F.Cu) (tedit 5EDD931D)
   (descr "Capacitor SMD 0603, reflow soldering, AVX (see smccp.pdf)")
   (tags "capacitor 0603")
   (attr smd)
@@ -26,7 +26,7 @@
   (fp_line (start -3.5 -2.45) (end -2.8 -2.45) (layer F.SilkS) (width 0.15))
   (pad 1 smd rect (at -3.15 0) (size 2.37 2.43) (layers F.Cu F.Paste F.Mask))
   (pad 2 smd rect (at 3.15 0) (size 2.37 2.43) (layers F.Cu F.Paste F.Mask))
-  (model Capacitors_SMD.3dshapes/C_0603.wrl
+  (model ${KISYS3DMOD}/Capacitor_Tantalum_SMD.3dshapes/CP_EIA-7343-31_Kemet-D.step
     (at (xyz 0 0 0))
     (scale (xyz 1 1 1))
     (rotate (xyz 0 0 0))

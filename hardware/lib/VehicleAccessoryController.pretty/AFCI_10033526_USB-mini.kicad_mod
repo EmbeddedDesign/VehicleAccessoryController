@@ -1,4 +1,4 @@
-(module AFCI_10033526_USB-mini (layer F.Cu) (tedit 5AD3E407)
+(module AFCI_10033526_USB-mini (layer F.Cu) (tedit 5EDD8DFA)
   (fp_text reference REF** (at 0 -5) (layer F.SilkS)
     (effects (font (size 1 1) (thickness 0.15)))
   )
@@ -30,4 +30,9 @@
     (solder_mask_margin 0.1))
   (pad 5 smd rect (at 1.6 -2.675) (size 0.5 2.25) (layers F.Cu F.Paste F.Mask)
     (solder_mask_margin 0.1))
+  (model /home/ops/Documents/VehicleAccessoryController/hardware/lib/VehicleAccessoryController.cad/10033526-N3212LF.step
+    (offset (xyz 0 2.8 -9.9))
+    (scale (xyz 1 1 1))
+    (rotate (xyz -90 0 0))
+  )
 )

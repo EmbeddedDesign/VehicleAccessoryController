@@ -1,4 +1,4 @@
-(module ATMEGA328P-MU_VQFN_MLF32 (layer F.Cu) (tedit 5B809D61)
+(module ATMEGA328P-MU_VQFN_MLF32 (layer F.Cu) (tedit 5EDD8F50)
   (attr smd)
   (fp_text reference U101 (at 0 -3.5) (layer F.SilkS)
     (effects (font (size 1 1) (thickness 0.15)))
@@ -78,4 +78,9 @@
     (solder_mask_margin 0.07) (solder_paste_margin -0.03))
   (pad 17 smd oval (at 2.35 1.75) (size 0.6 0.25) (layers F.Cu F.Paste F.Mask)
     (solder_mask_margin 0.07) (solder_paste_margin -0.03))
+  (model ${KISYS3DMOD}/Package_DFN_QFN.3dshapes/WQFN-32-1EP_5x5mm_P0.5mm_EP3.1x3.1mm.step
+    (at (xyz 0 0 0))
+    (scale (xyz 1 1 1))
+    (rotate (xyz 0 0 0))
+  )
 )

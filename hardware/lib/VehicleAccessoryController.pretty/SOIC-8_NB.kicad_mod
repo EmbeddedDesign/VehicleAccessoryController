@@ -1,4 +1,4 @@
-(module SOIC-8_NB (layer F.Cu) (tedit 5DB8CDA7)
+(module SOIC-8_NB (layer F.Cu) (tedit 5EDD90B1)
   (fp_text reference REF** (at 0 -3.5) (layer F.SilkS)
     (effects (font (size 1 1) (thickness 0.15)))
   )
@@ -26,4 +26,9 @@
     (solder_mask_margin 0.1) (solder_paste_margin -0.05) (clearance 0.1))
   (pad 5 smd rect (at 2.7 1.905) (size 1.55 0.6) (layers F.Cu F.Paste F.Mask)
     (solder_mask_margin 0.1) (solder_paste_margin -0.05) (clearance 0.1))
+  (model ${KISYS3DMOD}/Package_SO.3dshapes/SOIC-8_3.9x4.9mm_P1.27mm.step
+    (at (xyz 0 0 0))
+    (scale (xyz 1 1 1))
+    (rotate (xyz 0 0 0))
+  )
 )
