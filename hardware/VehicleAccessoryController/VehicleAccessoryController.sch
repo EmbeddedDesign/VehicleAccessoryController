@@ -5,7 +5,7 @@ $Descr A 11000 8500
 encoding utf-8
 Sheet 1 1
 Title "Vehicle Accessory Controller"
-Date "2019-12-03"
+Date "2020-06-22"
 Rev "0.1"
 Comp "Noctivore"
 Comment1 "IF IN DOUBT - ASK"
@@ -1356,11 +1356,11 @@ Text Label 8200 6075 2    50   ~ 0
 PARK_RIGHT
 Text Label 6525 2775 0    50   ~ 0
 PARK_FRONT
-Text Label 6525 2875 0    50   ~ 0
+Text Label 6525 3075 0    50   ~ 0
 PARK_REAR
 Text Label 6525 2975 0    50   ~ 0
 PARK_LEFT
-Text Label 6525 3075 0    50   ~ 0
+Text Label 6525 2875 0    50   ~ 0
 PARK_RIGHT
 Text Label 4825 2275 2    50   ~ 0
 PARK_STATUS
