@@ -12,25 +12,37 @@
 #include "uart.h"
 
 // Pin definitions
-#define PARK_FRONT  14 // A0
-#define PARK_REAR   15 // A1
-#define PARK_STATUS 6
-#define ACC         2
+#define PARK_FRONT   14 // A0
+#define PARK_RIGHT   15 // A1
+#define PARK_LEFT    16 // A2
+#define PARK_REAR    17 // A3
+#define POWER_STATUS 5
+#define PARK_STATUS  6
+#define ACC          2
 
+// Enable Park Mode
 void enableParkMode(void) {
   PORTC &= ~_BV(PORTC0); // digitalWrite(PARK_FRONT, LOW);
-  PORTC &= ~_BV(PORTC1); // digitalWrite(PARK_REAR, LOW);
+  PORTC &= ~_BV(PORTC1); // digitalWrite(PARK_RIGHT, LOW);
+  PORTC &= ~_BV(PORTC2); // digitalWrite(PARK_LEFT, LOW);
+  PORTC &= ~_BV(PORTC3); // digitalWrite(PARK_REAR, LOW);
+  // Turn PARK_STATUS LED ON
   PORTD &= ~_BV(PORTD6); // digitalWrite(PARK_STATUS, LOW);
-  puts("Park Mode: Enabled");
+  puts("Park Mode: Enabled"); // Print park mode status message
 }
 
+// Disable Park Mode
 void disableParkMode(void) {
   PORTC |= _BV(PORTC0); // digitalWrite(PARK_FRONT, HIGH);
-  PORTC |= _BV(PORTC1); // digitalWrite(PARK_REAR, HIGH);
+  PORTC |= _BV(PORTC1); // digitalWrite(PARK_RIGHT, HIGH);
+  PORTC |= _BV(PORTC2); // digitalWrite(PARK_LEFT, HIGH);
+  PORTC |= _BV(PORTC3); // digitalWrite(PARK_REAR, HIGH);
+  // Turn PARK_STATUS LED OFF
   PORTD |= _BV(PORTD6); // digitalWrite(PARK_STATUS, HIGH);
-  puts("Park Mode: Disabled");
+  puts("Park Mode: Disabled"); // Print park mode status message
 }
 
+// Main loop
 int main(void) {
   // Power saving
   ADCSRA = 0;  // Disable ADC
@@ -45,7 +57,10 @@ int main(void) {
 
   // Configure IO pins
   DDRC |= _BV(DDC0);    // pinMode(PARK_FRONT, OUTPUT);
-  DDRC |= _BV(DDC1);    // pinMode(PARK_REAR, OUTPUT);
+  DDRC |= _BV(DDC1);    // pinMode(PARK_RIGHT, OUTPUT);
+  DDRC |= _BV(DDC2);    // pinMode(PARK_LEFT, OUTPUT);
+  DDRC |= _BV(DDC3);    // pinMode(PARK_REAR, OUTPUT);
+  DDRD |= _BV(DDD5);    // pinMode(POWER_STATUS, OUTPUT);
   DDRD |= _BV(DDD6);    // pinMode(PARK_STATUS, OUTPUT);
   DDRD &= ~_BV(DDD2);   // Clear the PD2 pin
   PORTD |= _BV(PORTD2); // Enable PD2 internal pull-up
@@ -63,6 +78,9 @@ int main(void) {
   // Turn on interrupts
   sei();
 
+  // Turn POWER_STATUS LED ON
+  PORTD &= ~_BV(PORTD5); // digitalWrite(PARK_STATUS, LOW);
+  // Print system status message
   puts("System Status: OK");
  
  // Loop
