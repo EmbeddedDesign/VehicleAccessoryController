@@ -5,7 +5,7 @@ $Descr A 11000 8500
 encoding utf-8
 Sheet 1 1
 Title "Vehicle Accessory Controller"
-Date "2020-06-23"
+Date "2020-06-24"
 Rev "0.1"
 Comp "Noctivore"
 Comment1 "IF IN DOUBT - ASK"
@@ -1409,8 +1409,6 @@ Wire Wire Line
 	4225 2075 4975 2075
 Wire Wire Line
 	4225 1675 4225 1575
-NoConn ~ 4975 2375
-NoConn ~ 4975 2475
 NoConn ~ 6375 2475
 $Comp
 L Device:Resonator_Small Y901
