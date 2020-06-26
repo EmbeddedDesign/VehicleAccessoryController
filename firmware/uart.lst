@@ -138,13 +138,13 @@
  106               		.file 3 "/usr/lib/avr/include/stdio.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 uart.c
-     /tmp/ccUGsBTJ.s:2      *ABS*:000000000000003e __SP_H__
-     /tmp/ccUGsBTJ.s:3      *ABS*:000000000000003d __SP_L__
-     /tmp/ccUGsBTJ.s:4      *ABS*:000000000000003f __SREG__
-     /tmp/ccUGsBTJ.s:5      *ABS*:0000000000000000 __tmp_reg__
-     /tmp/ccUGsBTJ.s:6      *ABS*:0000000000000001 __zero_reg__
-     /tmp/ccUGsBTJ.s:12     .text:0000000000000000 uart_init
-     /tmp/ccUGsBTJ.s:44     .text:0000000000000022 uart_putchar
-     /tmp/ccUGsBTJ.s:83     .text:0000000000000040 uart_getchar
+     /tmp/ccdTIGT9.s:2      *ABS*:000000000000003e __SP_H__
+     /tmp/ccdTIGT9.s:3      *ABS*:000000000000003d __SP_L__
+     /tmp/ccdTIGT9.s:4      *ABS*:000000000000003f __SREG__
+     /tmp/ccdTIGT9.s:5      *ABS*:0000000000000000 __tmp_reg__
+     /tmp/ccdTIGT9.s:6      *ABS*:0000000000000001 __zero_reg__
+     /tmp/ccdTIGT9.s:12     .text:0000000000000000 uart_init
+     /tmp/ccdTIGT9.s:44     .text:0000000000000022 uart_putchar
+     /tmp/ccdTIGT9.s:83     .text:0000000000000040 uart_getchar
 
 NO UNDEFINED SYMBOLS

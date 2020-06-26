@@ -17,7 +17,7 @@
   13               		.text
   14               	.global	enableParkMode
   16               	enableParkMode:
-  17               	.LFB10:
+  17               	.LFB4:
   18               		.file 1 "main.c"
    1:main.c        **** /*
    2:main.c        ****  * Vehicle Accessory Controller
@@ -26,7 +26,7 @@
    5:main.c        **** 
    6:main.c        ****  // Include headers
    7:main.c        **** #include <avr/power.h>
-   8:main.c        **** #include <util/delay.h>
+   8:main.c        **** #include <avr/sleep.h>
    9:main.c        **** #include <avr/interrupt.h>
   10:main.c        **** #include <stdio.h>
   11:main.c        **** #include "main.h"
@@ -37,8 +37,8 @@
   16:main.c        **** #define PARK_RIGHT   15 // A1
   17:main.c        **** #define PARK_LEFT    16 // A2
   18:main.c        **** #define PARK_REAR    17 // A3
-  19:main.c        **** #define POWER_STATUS 5
-  20:main.c        **** #define PARK_STATUS  6
+  19:main.c        **** #define PARK_STATUS  18
+  20:main.c        **** #define POWER_STATUS 13
   21:main.c        **** #define ACC          2
   22:main.c        **** 
   23:main.c        **** // Enable Park Mode
@@ -62,9 +62,9 @@
   31               		.loc 1 28 0
   32 0006 4398      		cbi 0x8,3
   29:main.c        ****   // Turn PARK_STATUS LED ON
-  30:main.c        ****   PORTD &= ~_BV(PORTD6); // digitalWrite(PARK_STATUS, LOW);
+  30:main.c        ****   PORTC |= _BV(PORTC4); // digitalWrite(PARK_STATUS, HIGH);
   33               		.loc 1 30 0
-  34 0008 5E98      		cbi 0xb,6
+  34 0008 449A      		sbi 0x8,4
   31:main.c        ****   puts("Park Mode: Enabled"); // Print park mode status message
   35               		.loc 1 31 0
   36 000a 80E0      		ldi r24,lo8(.LC0)
@@ -72,7 +72,7 @@
   38 000e 0C94 0000 		jmp puts
   39               	.LVL0:
   40               		.cfi_endproc
-  41               	.LFE10:
+  41               	.LFE4:
   43               		.section	.rodata.str1.1
   44               	.LC1:
   45 0013 5061 726B 		.string	"Park Mode: Disabled"
@@ -83,7 +83,7 @@
   46               		.text
   47               	.global	disableParkMode
   49               	disableParkMode:
-  50               	.LFB11:
+  50               	.LFB5:
   32:main.c        **** }
   33:main.c        **** 
   34:main.c        **** // Disable Park Mode
@@ -107,9 +107,9 @@
   63               		.loc 1 39 0
   64 0018 439A      		sbi 0x8,3
   40:main.c        ****   // Turn PARK_STATUS LED OFF
-  41:main.c        ****   PORTD |= _BV(PORTD6); // digitalWrite(PARK_STATUS, HIGH);
+  41:main.c        ****   PORTC &= ~_BV(PORTC4); // digitalWrite(PARK_STATUS, LOW);
   65               		.loc 1 41 0
-  66 001a 5E9A      		sbi 0xb,6
+  66 001a 4498      		cbi 0x8,4
   42:main.c        ****   puts("Park Mode: Disabled"); // Print park mode status message
   67               		.loc 1 42 0
   68 001c 80E0      		ldi r24,lo8(.LC1)
@@ -117,7 +117,7 @@
   70 0020 0C94 0000 		jmp puts
   71               	.LVL1:
   72               		.cfi_endproc
-  73               	.LFE11:
+  73               	.LFE5:
   75               		.section	.rodata.str1.1
   76               	.LC2:
   77 0027 5379 7374 		.string	"System Status: OK"
@@ -128,7 +128,7 @@
   78               		.section	.text.startup,"ax",@progbits
   79               	.global	main
   81               	main:
-  82               	.LFB12:
+  82               	.LFB6:
   43:main.c        **** }
   44:main.c        **** 
   45:main.c        **** // Main loop
@@ -139,273 +139,332 @@
   86               	/* frame size = 0 */
   87               	/* stack size = 0 */
   88               	.L__stack_usage = 0
-  47:main.c        ****   // Power saving
-  48:main.c        ****   ADCSRA = 0;  // Disable ADC
+  47:main.c        ****   // Configure IO
+  48:main.c        ****   DDRC |= _BV(DDC0);    // pinMode(PARK_FRONT, OUTPUT);
   89               		.loc 1 48 0
-  90 0000 1092 7A00 		sts 122,__zero_reg__
-  49:main.c        ****   SPCR = 0; // Disable SPI
+  90 0000 389A      		sbi 0x7,0
+  49:main.c        ****   DDRC |= _BV(DDC1);    // pinMode(PARK_RIGHT, OUTPUT);
   91               		.loc 1 49 0
-  92 0004 1CBC      		out 0x2c,__zero_reg__
-  50:main.c        ****   power_adc_disable ();
+  92 0002 399A      		sbi 0x7,1
+  50:main.c        ****   DDRC |= _BV(DDC2);    // pinMode(PARK_LEFT, OUTPUT);
   93               		.loc 1 50 0
-  94 0006 8091 6400 		lds r24,100
-  95 000a 8160      		ori r24,lo8(1)
-  96 000c 8093 6400 		sts 100,r24
-  51:main.c        ****   power_spi_disable();
-  97               		.loc 1 51 0
-  98 0010 8091 6400 		lds r24,100
-  99 0014 8460      		ori r24,lo8(4)
- 100 0016 8093 6400 		sts 100,r24
-  52:main.c        ****   power_twi_disable();
- 101               		.loc 1 52 0
- 102 001a 8091 6400 		lds r24,100
- 103 001e 8068      		ori r24,lo8(-128)
- 104 0020 8093 6400 		sts 100,r24
-  53:main.c        ****   power_timer1_disable();
- 105               		.loc 1 53 0
- 106 0024 8091 6400 		lds r24,100
- 107 0028 8860      		ori r24,lo8(8)
- 108 002a 8093 6400 		sts 100,r24
-  54:main.c        ****   // Turn off brown-out enable in software
-  55:main.c        ****   // MCUCR = bit (BODS) | bit (BODSE);
-  56:main.c        ****   // MCUCR = bit (BODS);
-  57:main.c        **** 
-  58:main.c        ****   // Configure IO pins
-  59:main.c        ****   DDRC |= _BV(DDC0);    // pinMode(PARK_FRONT, OUTPUT);
- 109               		.loc 1 59 0
- 110 002e 389A      		sbi 0x7,0
-  60:main.c        ****   DDRC |= _BV(DDC1);    // pinMode(PARK_RIGHT, OUTPUT);
- 111               		.loc 1 60 0
- 112 0030 399A      		sbi 0x7,1
-  61:main.c        ****   DDRC |= _BV(DDC2);    // pinMode(PARK_LEFT, OUTPUT);
- 113               		.loc 1 61 0
- 114 0032 3A9A      		sbi 0x7,2
-  62:main.c        ****   DDRC |= _BV(DDC3);    // pinMode(PARK_REAR, OUTPUT);
- 115               		.loc 1 62 0
- 116 0034 3B9A      		sbi 0x7,3
-  63:main.c        ****   DDRD |= _BV(DDD5);    // pinMode(POWER_STATUS, OUTPUT);
- 117               		.loc 1 63 0
- 118 0036 559A      		sbi 0xa,5
-  64:main.c        ****   DDRD |= _BV(DDD6);    // pinMode(PARK_STATUS, OUTPUT);
- 119               		.loc 1 64 0
- 120 0038 569A      		sbi 0xa,6
-  65:main.c        ****   DDRD &= ~_BV(DDD2);   // Clear the PD2 pin
- 121               		.loc 1 65 0
- 122 003a 5298      		cbi 0xa,2
-  66:main.c        ****   PORTD |= _BV(PORTD2); // Enable PD2 internal pull-up
- 123               		.loc 1 66 0
- 124 003c 5A9A      		sbi 0xb,2
-  67:main.c        ****   
-  68:main.c        ****   // UART setup
-  69:main.c        ****   uart_init();
- 125               		.loc 1 69 0
- 126 003e 0E94 0000 		call uart_init
- 127               	.LVL2:
-  70:main.c        ****   stdout = &uart_output;
- 128               		.loc 1 70 0
- 129 0042 80E0      		ldi r24,lo8(uart_output)
- 130 0044 90E0      		ldi r25,hi8(uart_output)
- 131 0046 9093 0000 		sts __iob+2+1,r25
- 132 004a 8093 0000 		sts __iob+2,r24
-  71:main.c        ****   stdin  = &uart_input;
- 133               		.loc 1 71 0
- 134 004e 80E0      		ldi r24,lo8(uart_input)
- 135 0050 90E0      		ldi r25,hi8(uart_input)
- 136 0052 9093 0000 		sts __iob+1,r25
- 137 0056 8093 0000 		sts __iob,r24
-  72:main.c        **** 
-  73:main.c        ****   // Interupt init
-  74:main.c        ****   // Enable pin change interrupt on the PCINT18 pin using Pin Change Mask Register 2 (PCMSK2)
-  75:main.c        ****   PCMSK2 |= _BV(PCINT18);
- 138               		.loc 1 75 0
- 139 005a 8091 6D00 		lds r24,109
- 140 005e 8460      		ori r24,lo8(4)
- 141 0060 8093 6D00 		sts 109,r24
-  76:main.c        ****   // Enable pin change interrupt 2 using the Pin Change Interrrupt Control Register (PCICR)
-  77:main.c        ****   PCICR |= _BV(PCIE2);
- 142               		.loc 1 77 0
- 143 0064 8091 6800 		lds r24,104
- 144 0068 8460      		ori r24,lo8(4)
- 145 006a 8093 6800 		sts 104,r24
-  78:main.c        ****   // Turn on interrupts
-  79:main.c        ****   sei();
- 146               		.loc 1 79 0
- 147               	/* #APP */
- 148               	 ;  79 "main.c" 1
- 149 006e 7894      		sei
- 150               	 ;  0 "" 2
-  80:main.c        **** 
-  81:main.c        ****   // Turn POWER_STATUS LED ON
-  82:main.c        ****   PORTD &= ~_BV(PORTD5); // digitalWrite(PARK_STATUS, LOW);
- 151               		.loc 1 82 0
- 152               	/* #NOAPP */
- 153 0070 5D98      		cbi 0xb,5
-  83:main.c        ****   // Print system status message
-  84:main.c        ****   puts("System Status: OK");
- 154               		.loc 1 84 0
- 155 0072 80E0      		ldi r24,lo8(.LC2)
- 156 0074 90E0      		ldi r25,hi8(.LC2)
- 157 0076 0E94 0000 		call puts
- 158               	.LVL3:
- 159               	.L4:
- 160 007a 00C0      		rjmp .L4
- 161               		.cfi_endproc
- 162               	.LFE12:
- 164               		.text
- 165               	.global	__vector_5
- 167               	__vector_5:
- 168               	.LFB13:
-  85:main.c        ****  
-  86:main.c        ****  // Loop
-  87:main.c        ****   while(1) {
-  88:main.c        ****     // Nothing to do here
-  89:main.c        ****   }
-  90:main.c        **** 
-  91:main.c        ****   return 0;
-  92:main.c        **** }
-  93:main.c        **** 
-  94:main.c        **** ISR(PCINT2_vect)
-  95:main.c        **** {
- 169               		.loc 1 95 0
- 170               		.cfi_startproc
- 171 0024 1F92      		push r1
- 172               	.LCFI0:
- 173               		.cfi_def_cfa_offset 3
- 174               		.cfi_offset 1, -2
- 175 0026 0F92      		push r0
- 176               	.LCFI1:
- 177               		.cfi_def_cfa_offset 4
- 178               		.cfi_offset 0, -3
- 179 0028 0FB6      		in r0,__SREG__
- 180 002a 0F92      		push r0
- 181 002c 1124      		clr __zero_reg__
- 182 002e 2F93      		push r18
- 183               	.LCFI2:
- 184               		.cfi_def_cfa_offset 5
- 185               		.cfi_offset 18, -4
- 186 0030 3F93      		push r19
- 187               	.LCFI3:
- 188               		.cfi_def_cfa_offset 6
- 189               		.cfi_offset 19, -5
- 190 0032 4F93      		push r20
- 191               	.LCFI4:
- 192               		.cfi_def_cfa_offset 7
- 193               		.cfi_offset 20, -6
- 194 0034 5F93      		push r21
- 195               	.LCFI5:
- 196               		.cfi_def_cfa_offset 8
- 197               		.cfi_offset 21, -7
- 198 0036 6F93      		push r22
- 199               	.LCFI6:
- 200               		.cfi_def_cfa_offset 9
- 201               		.cfi_offset 22, -8
- 202 0038 7F93      		push r23
- 203               	.LCFI7:
- 204               		.cfi_def_cfa_offset 10
- 205               		.cfi_offset 23, -9
- 206 003a 8F93      		push r24
- 207               	.LCFI8:
- 208               		.cfi_def_cfa_offset 11
- 209               		.cfi_offset 24, -10
- 210 003c 9F93      		push r25
- 211               	.LCFI9:
- 212               		.cfi_def_cfa_offset 12
- 213               		.cfi_offset 25, -11
- 214 003e AF93      		push r26
- 215               	.LCFI10:
- 216               		.cfi_def_cfa_offset 13
- 217               		.cfi_offset 26, -12
- 218 0040 BF93      		push r27
- 219               	.LCFI11:
- 220               		.cfi_def_cfa_offset 14
- 221               		.cfi_offset 27, -13
- 222 0042 EF93      		push r30
- 223               	.LCFI12:
- 224               		.cfi_def_cfa_offset 15
- 225               		.cfi_offset 30, -14
- 226 0044 FF93      		push r31
- 227               	.LCFI13:
- 228               		.cfi_def_cfa_offset 16
- 229               		.cfi_offset 31, -15
- 230               	/* prologue: Signal */
- 231               	/* frame size = 0 */
- 232               	/* stack size = 15 */
- 233               	.L__stack_usage = 15
-  96:main.c        ****   // Read PD2 using the Port D Pin Input Register (PIND)
-  97:main.c        ****   if (PIND & _BV(PIND2)) { // PD2 is HIGH
- 234               		.loc 1 97 0
- 235 0046 4A9B      		sbis 0x9,2
- 236 0048 00C0      		rjmp .L7
-  98:main.c        ****     enableParkMode();
- 237               		.loc 1 98 0
- 238 004a 0E94 0000 		call enableParkMode
- 239               	.LVL4:
- 240 004e 00C0      		rjmp .L6
- 241               	.L7:
-  99:main.c        ****   } else { // PD2 is LOW
- 100:main.c        ****     disableParkMode();
- 242               		.loc 1 100 0
- 243 0050 0E94 0000 		call disableParkMode
- 244               	.LVL5:
- 245               	.L6:
- 246               	/* epilogue start */
- 101:main.c        ****   }
- 102:main.c        **** }
- 247               		.loc 1 102 0
- 248 0054 FF91      		pop r31
- 249 0056 EF91      		pop r30
- 250 0058 BF91      		pop r27
- 251 005a AF91      		pop r26
- 252 005c 9F91      		pop r25
- 253 005e 8F91      		pop r24
- 254 0060 7F91      		pop r23
- 255 0062 6F91      		pop r22
- 256 0064 5F91      		pop r21
- 257 0066 4F91      		pop r20
- 258 0068 3F91      		pop r19
- 259 006a 2F91      		pop r18
- 260 006c 0F90      		pop r0
- 261 006e 0FBE      		out __SREG__,r0
- 262 0070 0F90      		pop r0
- 263 0072 1F90      		pop r1
- 264 0074 1895      		reti
- 265               		.cfi_endproc
- 266               	.LFE13:
- 268               	.global	uart_input
- 269               		.data
- 272               	uart_input:
- 273 0000 0000 00   		.zero	3
- 274 0003 01        		.byte	1
- 275 0004 0000 0000 		.zero	4
- 276 0008 0000      		.word	0
- 277 000a 0000      		.word	gs(uart_getchar)
- 278 000c 0000      		.word	0
- 279               	.global	uart_output
- 282               	uart_output:
- 283 000e 0000 00   		.zero	3
- 284 0011 02        		.byte	2
- 285 0012 0000 0000 		.zero	4
- 286 0016 0000      		.word	gs(uart_putchar)
- 287 0018 0000      		.word	0
- 288 001a 0000      		.word	0
- 289               		.text
- 290               	.Letext0:
- 291               		.file 2 "/usr/lib/avr/include/stdio.h"
- 292               		.file 3 "/usr/lib/avr/include/stdint.h"
- 293               		.file 4 "uart.h"
+  94 0004 3A9A      		sbi 0x7,2
+  51:main.c        ****   DDRC |= _BV(DDC3);    // pinMode(PARK_REAR, OUTPUT);
+  95               		.loc 1 51 0
+  96 0006 3B9A      		sbi 0x7,3
+  52:main.c        ****   DDRC |= _BV(DDC4);    // pinMode(PARK_STATUS, OUTPUT);
+  97               		.loc 1 52 0
+  98 0008 3C9A      		sbi 0x7,4
+  53:main.c        ****   DDRB |= _BV(DDB5);    // pinMode(POWER_STATUS, OUTPUT);
+  99               		.loc 1 53 0
+ 100 000a 259A      		sbi 0x4,5
+  54:main.c        ****   DDRD &= ~_BV(DDD2);   // Clear the PD2 pin
+ 101               		.loc 1 54 0
+ 102 000c 5298      		cbi 0xa,2
+  55:main.c        ****   PORTD |= _BV(PORTD2); // Enable PD2 internal pull-up
+ 103               		.loc 1 55 0
+ 104 000e 5A9A      		sbi 0xb,2
+  56:main.c        ****   
+  57:main.c        ****   // UART setup
+  58:main.c        ****   uart_init();
+ 105               		.loc 1 58 0
+ 106 0010 0E94 0000 		call uart_init
+ 107               	.LVL2:
+  59:main.c        ****   stdout = &uart_output;
+ 108               		.loc 1 59 0
+ 109 0014 80E0      		ldi r24,lo8(uart_output)
+ 110 0016 90E0      		ldi r25,hi8(uart_output)
+ 111 0018 9093 0000 		sts __iob+2+1,r25
+ 112 001c 8093 0000 		sts __iob+2,r24
+  60:main.c        ****   stdin  = &uart_input;
+ 113               		.loc 1 60 0
+ 114 0020 80E0      		ldi r24,lo8(uart_input)
+ 115 0022 90E0      		ldi r25,hi8(uart_input)
+ 116 0024 9093 0000 		sts __iob+1,r25
+ 117 0028 8093 0000 		sts __iob,r24
+  61:main.c        **** 
+  62:main.c        ****   // Turn POWER_STATUS LED ON
+  63:main.c        ****   PORTB |= _BV(PORTB5); // digitalWrite(POWER_STATUS, HIGH);
+ 118               		.loc 1 63 0
+ 119 002c 2D9A      		sbi 0x5,5
+  64:main.c        ****   // Print system status message
+  65:main.c        ****   puts("System Status: OK");
+ 120               		.loc 1 65 0
+ 121 002e 80E0      		ldi r24,lo8(.LC2)
+ 122 0030 90E0      		ldi r25,hi8(.LC2)
+ 123 0032 0E94 0000 		call puts
+ 124               	.LVL3:
+  66:main.c        ****  
+  67:main.c        ****  // Loop
+  68:main.c        ****   while(1) {
+  69:main.c        ****     // Power saving
+  70:main.c        ****     power_adc_disable ();
+  71:main.c        ****     power_spi_disable();
+  72:main.c        ****     power_twi_disable();
+  73:main.c        ****     power_timer1_disable();
+  74:main.c        ****     power_timer2_disable();
+  75:main.c        **** 
+  76:main.c        ****     // Configure sleep
+  77:main.c        ****     set_sleep_mode(SLEEP_MODE_PWR_DOWN);
+  78:main.c        ****     sleep_enable();
+  79:main.c        **** 
+  80:main.c        ****     // Do not interrupt before to sleep or ISR will detach interrupts won't wake.
+  81:main.c        ****     cli();
+  82:main.c        **** 
+  83:main.c        ****     // Interrupt init
+  84:main.c        ****     // Enable Pin Change Interrupt on the PCINT18 pin using Pin Change Mask Register 2 (PCMSK2)
+  85:main.c        ****     PCMSK2 |= _BV(PCINT18);
+  86:main.c        ****     // Enable Pin Change Interrupt 2 using the Pin Change Interrupt Control Register (PCICR)
+  87:main.c        ****     PCICR |= _BV(PCIE2);
+  88:main.c        **** 
+  89:main.c        ****     // Turn off brown-out enable in software
+  90:main.c        ****     MCUCR = _BV(BODS) | _BV(BODSE);
+ 125               		.loc 1 90 0
+ 126 0036 20E6      		ldi r18,lo8(96)
+  91:main.c        ****     MCUCR = _BV(BODS);
+ 127               		.loc 1 91 0
+ 128 0038 90E4      		ldi r25,lo8(64)
+ 129               	.L4:
+  70:main.c        ****     power_spi_disable();
+ 130               		.loc 1 70 0 discriminator 1
+ 131 003a 8091 6400 		lds r24,100
+ 132 003e 8160      		ori r24,lo8(1)
+ 133 0040 8093 6400 		sts 100,r24
+  71:main.c        ****     power_twi_disable();
+ 134               		.loc 1 71 0 discriminator 1
+ 135 0044 8091 6400 		lds r24,100
+ 136 0048 8460      		ori r24,lo8(4)
+ 137 004a 8093 6400 		sts 100,r24
+  72:main.c        ****     power_timer1_disable();
+ 138               		.loc 1 72 0 discriminator 1
+ 139 004e 8091 6400 		lds r24,100
+ 140 0052 8068      		ori r24,lo8(-128)
+ 141 0054 8093 6400 		sts 100,r24
+  73:main.c        ****     power_timer2_disable();
+ 142               		.loc 1 73 0 discriminator 1
+ 143 0058 8091 6400 		lds r24,100
+ 144 005c 8860      		ori r24,lo8(8)
+ 145 005e 8093 6400 		sts 100,r24
+  74:main.c        **** 
+ 146               		.loc 1 74 0 discriminator 1
+ 147 0062 8091 6400 		lds r24,100
+ 148 0066 8064      		ori r24,lo8(64)
+ 149 0068 8093 6400 		sts 100,r24
+  77:main.c        ****     sleep_enable();
+ 150               		.loc 1 77 0 discriminator 1
+ 151 006c 83B7      		in r24,0x33
+ 152 006e 817F      		andi r24,lo8(-15)
+ 153 0070 8460      		ori r24,lo8(4)
+ 154 0072 83BF      		out 0x33,r24
+  78:main.c        **** 
+ 155               		.loc 1 78 0 discriminator 1
+ 156 0074 83B7      		in r24,0x33
+ 157 0076 8160      		ori r24,lo8(1)
+ 158 0078 83BF      		out 0x33,r24
+  81:main.c        **** 
+ 159               		.loc 1 81 0 discriminator 1
+ 160               	/* #APP */
+ 161               	 ;  81 "main.c" 1
+ 162 007a F894      		cli
+ 163               	 ;  0 "" 2
+  85:main.c        ****     // Enable Pin Change Interrupt 2 using the Pin Change Interrupt Control Register (PCICR)
+ 164               		.loc 1 85 0 discriminator 1
+ 165               	/* #NOAPP */
+ 166 007c 8091 6D00 		lds r24,109
+ 167 0080 8460      		ori r24,lo8(4)
+ 168 0082 8093 6D00 		sts 109,r24
+  87:main.c        **** 
+ 169               		.loc 1 87 0 discriminator 1
+ 170 0086 8091 6800 		lds r24,104
+ 171 008a 8460      		ori r24,lo8(4)
+ 172 008c 8093 6800 		sts 104,r24
+  90:main.c        ****     MCUCR = _BV(BODS);
+ 173               		.loc 1 90 0 discriminator 1
+ 174 0090 25BF      		out 0x35,r18
+ 175               		.loc 1 91 0 discriminator 1
+ 176 0092 95BF      		out 0x35,r25
+  92:main.c        **** 
+  93:main.c        ****     // Enable interrupts
+  94:main.c        ****     sei();
+ 177               		.loc 1 94 0 discriminator 1
+ 178               	/* #APP */
+ 179               	 ;  94 "main.c" 1
+ 180 0094 7894      		sei
+ 181               	 ;  0 "" 2
+  95:main.c        ****     // Guaranteed sleep_cpu call will be done as CPU executes next instruction after interrupts ena
+  96:main.c        ****     sleep_cpu();
+ 182               		.loc 1 96 0 discriminator 1
+ 183               	 ;  96 "main.c" 1
+ 184 0096 8895      		sleep
+ 185               		
+ 186               	 ;  0 "" 2
+ 187               	/* #NOAPP */
+ 188 0098 00C0      		rjmp .L4
+ 189               		.cfi_endproc
+ 190               	.LFE6:
+ 192               		.text
+ 193               	.global	__vector_5
+ 195               	__vector_5:
+ 196               	.LFB7:
+  97:main.c        ****   }
+  98:main.c        **** 
+  99:main.c        ****   return 0;
+ 100:main.c        **** }
+ 101:main.c        **** 
+ 102:main.c        **** ISR(PCINT2_vect)
+ 103:main.c        **** {
+ 197               		.loc 1 103 0
+ 198               		.cfi_startproc
+ 199 0024 1F92      		push r1
+ 200               	.LCFI0:
+ 201               		.cfi_def_cfa_offset 3
+ 202               		.cfi_offset 1, -2
+ 203 0026 0F92      		push r0
+ 204               	.LCFI1:
+ 205               		.cfi_def_cfa_offset 4
+ 206               		.cfi_offset 0, -3
+ 207 0028 0FB6      		in r0,__SREG__
+ 208 002a 0F92      		push r0
+ 209 002c 1124      		clr __zero_reg__
+ 210 002e 2F93      		push r18
+ 211               	.LCFI2:
+ 212               		.cfi_def_cfa_offset 5
+ 213               		.cfi_offset 18, -4
+ 214 0030 3F93      		push r19
+ 215               	.LCFI3:
+ 216               		.cfi_def_cfa_offset 6
+ 217               		.cfi_offset 19, -5
+ 218 0032 4F93      		push r20
+ 219               	.LCFI4:
+ 220               		.cfi_def_cfa_offset 7
+ 221               		.cfi_offset 20, -6
+ 222 0034 5F93      		push r21
+ 223               	.LCFI5:
+ 224               		.cfi_def_cfa_offset 8
+ 225               		.cfi_offset 21, -7
+ 226 0036 6F93      		push r22
+ 227               	.LCFI6:
+ 228               		.cfi_def_cfa_offset 9
+ 229               		.cfi_offset 22, -8
+ 230 0038 7F93      		push r23
+ 231               	.LCFI7:
+ 232               		.cfi_def_cfa_offset 10
+ 233               		.cfi_offset 23, -9
+ 234 003a 8F93      		push r24
+ 235               	.LCFI8:
+ 236               		.cfi_def_cfa_offset 11
+ 237               		.cfi_offset 24, -10
+ 238 003c 9F93      		push r25
+ 239               	.LCFI9:
+ 240               		.cfi_def_cfa_offset 12
+ 241               		.cfi_offset 25, -11
+ 242 003e AF93      		push r26
+ 243               	.LCFI10:
+ 244               		.cfi_def_cfa_offset 13
+ 245               		.cfi_offset 26, -12
+ 246 0040 BF93      		push r27
+ 247               	.LCFI11:
+ 248               		.cfi_def_cfa_offset 14
+ 249               		.cfi_offset 27, -13
+ 250 0042 EF93      		push r30
+ 251               	.LCFI12:
+ 252               		.cfi_def_cfa_offset 15
+ 253               		.cfi_offset 30, -14
+ 254 0044 FF93      		push r31
+ 255               	.LCFI13:
+ 256               		.cfi_def_cfa_offset 16
+ 257               		.cfi_offset 31, -15
+ 258               	/* prologue: Signal */
+ 259               	/* frame size = 0 */
+ 260               	/* stack size = 15 */
+ 261               	.L__stack_usage = 15
+ 104:main.c        ****   // Cancel sleep as a precaution
+ 105:main.c        ****   sleep_disable();
+ 262               		.loc 1 105 0
+ 263 0046 83B7      		in r24,0x33
+ 264 0048 8E7F      		andi r24,lo8(-2)
+ 265 004a 83BF      		out 0x33,r24
+ 106:main.c        ****   // Disable Pin Change Interrupt 2 while we do other stuff
+ 107:main.c        ****   PCICR &= ~_BV(PCIE2);
+ 266               		.loc 1 107 0
+ 267 004c 8091 6800 		lds r24,104
+ 268 0050 8B7F      		andi r24,lo8(-5)
+ 269 0052 8093 6800 		sts 104,r24
+ 108:main.c        ****   // Read PD2 using the Port D Pin Input Register (PIND)
+ 109:main.c        ****   if (PIND & _BV(PIND2)) { // PD2 is HIGH
+ 270               		.loc 1 109 0
+ 271 0056 4A9B      		sbis 0x9,2
+ 272 0058 00C0      		rjmp .L7
+ 110:main.c        ****     enableParkMode();
+ 273               		.loc 1 110 0
+ 274 005a 0E94 0000 		call enableParkMode
+ 275               	.LVL4:
+ 276 005e 00C0      		rjmp .L6
+ 277               	.L7:
+ 111:main.c        ****   } else { // PD2 is LOW
+ 112:main.c        ****     disableParkMode();
+ 278               		.loc 1 112 0
+ 279 0060 0E94 0000 		call disableParkMode
+ 280               	.LVL5:
+ 281               	.L6:
+ 282               	/* epilogue start */
+ 113:main.c        ****   }
+ 114:main.c        **** }
+ 283               		.loc 1 114 0
+ 284 0064 FF91      		pop r31
+ 285 0066 EF91      		pop r30
+ 286 0068 BF91      		pop r27
+ 287 006a AF91      		pop r26
+ 288 006c 9F91      		pop r25
+ 289 006e 8F91      		pop r24
+ 290 0070 7F91      		pop r23
+ 291 0072 6F91      		pop r22
+ 292 0074 5F91      		pop r21
+ 293 0076 4F91      		pop r20
+ 294 0078 3F91      		pop r19
+ 295 007a 2F91      		pop r18
+ 296 007c 0F90      		pop r0
+ 297 007e 0FBE      		out __SREG__,r0
+ 298 0080 0F90      		pop r0
+ 299 0082 1F90      		pop r1
+ 300 0084 1895      		reti
+ 301               		.cfi_endproc
+ 302               	.LFE7:
+ 304               	.global	uart_input
+ 305               		.data
+ 308               	uart_input:
+ 309 0000 0000 00   		.zero	3
+ 310 0003 01        		.byte	1
+ 311 0004 0000 0000 		.zero	4
+ 312 0008 0000      		.word	0
+ 313 000a 0000      		.word	gs(uart_getchar)
+ 314 000c 0000      		.word	0
+ 315               	.global	uart_output
+ 318               	uart_output:
+ 319 000e 0000 00   		.zero	3
+ 320 0011 02        		.byte	2
+ 321 0012 0000 0000 		.zero	4
+ 322 0016 0000      		.word	gs(uart_putchar)
+ 323 0018 0000      		.word	0
+ 324 001a 0000      		.word	0
+ 325               		.text
+ 326               	.Letext0:
+ 327               		.file 2 "/usr/lib/avr/include/stdio.h"
+ 328               		.file 3 "/usr/lib/avr/include/stdint.h"
+ 329               		.file 4 "uart.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 main.c
-     /tmp/ccPQr6AA.s:2      *ABS*:000000000000003e __SP_H__
-     /tmp/ccPQr6AA.s:3      *ABS*:000000000000003d __SP_L__
-     /tmp/ccPQr6AA.s:4      *ABS*:000000000000003f __SREG__
-     /tmp/ccPQr6AA.s:5      *ABS*:0000000000000000 __tmp_reg__
-     /tmp/ccPQr6AA.s:6      *ABS*:0000000000000001 __zero_reg__
-     /tmp/ccPQr6AA.s:16     .text:0000000000000000 enableParkMode
-     /tmp/ccPQr6AA.s:49     .text:0000000000000012 disableParkMode
-     /tmp/ccPQr6AA.s:81     .text.startup:0000000000000000 main
-     /tmp/ccPQr6AA.s:282    .data:000000000000000e uart_output
-     /tmp/ccPQr6AA.s:272    .data:0000000000000000 uart_input
-     /tmp/ccPQr6AA.s:167    .text:0000000000000024 __vector_5
+     /tmp/ccDkqfK6.s:2      *ABS*:000000000000003e __SP_H__
+     /tmp/ccDkqfK6.s:3      *ABS*:000000000000003d __SP_L__
+     /tmp/ccDkqfK6.s:4      *ABS*:000000000000003f __SREG__
+     /tmp/ccDkqfK6.s:5      *ABS*:0000000000000000 __tmp_reg__
+     /tmp/ccDkqfK6.s:6      *ABS*:0000000000000001 __zero_reg__
+     /tmp/ccDkqfK6.s:16     .text:0000000000000000 enableParkMode
+     /tmp/ccDkqfK6.s:49     .text:0000000000000012 disableParkMode
+     /tmp/ccDkqfK6.s:81     .text.startup:0000000000000000 main
+     /tmp/ccDkqfK6.s:318    .data:000000000000000e uart_output
+     /tmp/ccDkqfK6.s:308    .data:0000000000000000 uart_input
+     /tmp/ccDkqfK6.s:195    .text:0000000000000024 __vector_5
 
 UNDEFINED SYMBOLS
 puts
