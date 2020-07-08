@@ -19,6 +19,10 @@
 #
 # make extcoff = Convert ELF to AVR Extended COFF.
 #
+# make fuse = Fuse the part.
+#
+# make bootloader = Burn the bootloader.
+#
 # make program = Download the hex file to the device, using avrdude.
 #                Please customize the avrdude settings below first!
 #
@@ -32,8 +36,6 @@
 #
 # To rebuild project do "make clean" then "make all".
 #----------------------------------------------------------------------------
-
-
 # MCU name
 MCU = atmega328p
 
@@ -51,7 +53,8 @@ FORMAT = ihex
 TARGET = main
 
 # List C source files here. (C dependencies are automatically generated.)
-SRC = $(TARGET).c uart.c
+# SRC = $(TARGET).c uart.c
+SRC = $(TARGET).c
 
 # List Assembler source files here.
 #     Make them always end in a capital .S.  Files ending in a lowercase .s
@@ -61,48 +64,34 @@ SRC = $(TARGET).c uart.c
 #     it will preserve the spelling of the filenames, and gcc itself does
 #     care about how the name is spelled on its command-line.
 ASRC = 
-
-
 # Optimization level, can be [0, 1, 2, 3, s]. 
 #     0 = turn off optimization. s = optimize for size.
 #     (Note: 3 is not always the best optimization level. See avr-libc FAQ.)
 OPT = s
-
-
 # Debugging format.
 #     Native formats for AVR-GCC's -g are dwarf-2 [default] or stabs.
 #     AVR Studio 4.10 requires dwarf-2.
 #     AVR [Extended] COFF format requires stabs, plus an avr-objcopy run.
 DEBUG = dwarf-2
-
-
 # List any extra directories to look for include files here.
 #     Each directory must be seperated by a space.
 #     Use forward slashes for directory separators.
 #     For a directory that has spaces, enclose it in quotes.
 EXTRAINCDIRS = 
-
-
 # Compiler flag to set the C Standard level.
 #     c89   = "ANSI" C
 #     gnu89 = c89 plus GCC extensions
 #     c99   = ISO C99 standard (not yet fully implemented)
 #     gnu99 = c99 plus GCC extensions
 CSTANDARD = -std=gnu99
-
-
 # Place -D or -U options here
 CDEFS = -DF_CPU=$(F_CPU)UL  
 
 # uncomment and adapt these line if you want different UART library buffer size
 #CDEFS += -DUART_RX_BUFFER_SIZE=128
 #CDEFS += -DUART_TX_BUFFER_SIZE=128
-
-
 # Place -I options here
 CINCS =
-
-
 
 #---------------- Compiler Options ----------------
 #  -g*:          generate debugging information
@@ -119,8 +108,6 @@ CFLAGS += -Wall -Wstrict-prototypes
 CFLAGS += -Wa,-adhlns=$(<:.c=.lst)
 CFLAGS += $(patsubst %,-I%,$(EXTRAINCDIRS))
 CFLAGS += $(CSTANDARD)
-
-
 #---------------- Assembler Options ----------------
 #  -Wa,...:   tell GCC to pass this to the assembler.
 #  -ahlms:    create listing
@@ -129,8 +116,6 @@ CFLAGS += $(CSTANDARD)
 #             and function names needs to be present in the assembler source
 #             files -- see avr-libc docs [FIXME: not yet described there]
 ASFLAGS = -Wa,-adhlns=$(<:.S=.lst),-gstabs 
-
-
 #---------------- Library Options ----------------
 # Minimalistic printf version
 PRINTF_LIB_MIN = -Wl,-u,vfprintf -lprintf_min
@@ -142,8 +127,6 @@ PRINTF_LIB_FLOAT = -Wl,-u,vfprintf -lprintf_flt
 PRINTF_LIB = 
 #PRINTF_LIB = $(PRINTF_LIB_MIN)
 #PRINTF_LIB = $(PRINTF_LIB_FLOAT)
-
-
 # Minimalistic scanf version
 SCANF_LIB_MIN = -Wl,-u,vfscanf -lscanf_min
 
@@ -154,11 +137,7 @@ SCANF_LIB_FLOAT = -Wl,-u,vfscanf -lscanf_flt
 SCANF_LIB = 
 #SCANF_LIB = $(SCANF_LIB_MIN)
 #SCANF_LIB = $(SCANF_LIB_FLOAT)
-
-
 MATH_LIB = -lm
-
-
 
 #---------------- External Memory Options ----------------
 
@@ -172,8 +151,6 @@ MATH_LIB = -lm
 
 EXTMEMOPTS =
 
-
-
 #---------------- Linker Options ----------------
 #  -Wl,...:     tell GCC to pass this to linker.
 #    -Map:      create map file
@@ -181,8 +158,6 @@ EXTMEMOPTS =
 LDFLAGS = -Wl,-Map=$(TARGET).map,--cref
 LDFLAGS += $(EXTMEMOPTS)
 LDFLAGS += $(PRINTF_LIB) $(SCANF_LIB) $(MATH_LIB)
-
-
 
 #---------------- Programming Options (avrdude) ----------------
 
@@ -193,16 +168,19 @@ LDFLAGS += $(PRINTF_LIB) $(SCANF_LIB) $(MATH_LIB)
 # to get a full listing.
 #
 AVRDUDE_PROGRAMMER = arduino
+# AVRDUDE_PROGRAMMER = usbtiny
 # AVRDUDE_PROGRAMMER = avrispmkII
+
+# avrdude configuration file location
+AVRDUDE_CONF = "./tools/avrdude.conf"
 
 # com1 = serial port. Use lpt1 to connect to parallel port.
 # programmer connected to serial device\
-# AVRDUDE_PORT = /dev/tty.usb*
-AVRDUDE_PORT = /dev/ttyACM0
+# AVRDUDE_PORT = /dev/ttyAMC0
+AVRDUDE_PORT = /dev/ttyUSB0
 
 AVRDUDE_WRITE_FLASH = -U flash:w:$(TARGET).hex
 #AVRDUDE_WRITE_EEPROM = -U eeprom:w:$(TARGET).eep
-
 
 # Uncomment the following if you want avrdude's erase cycle counter.
 # Note that this counter needs to be initialized first using -Yn,
@@ -219,11 +197,10 @@ AVRDUDE_WRITE_FLASH = -U flash:w:$(TARGET).hex
 #AVRDUDE_VERBOSE = -v -v
 
 AVRDUDE_FLAGS = -v -p$(MCU) -c$(AVRDUDE_PROGRAMMER) -P$(AVRDUDE_PORT) -b 115200
+# AVRDUDE_FLAGS = -v -p$(MCU) -c$(AVRDUDE_PROGRAMMER) -C$(AVRDUDE_CONF) -P$(AVRDUDE_PORT) -b 115200
 AVRDUDE_FLAGS += $(AVRDUDE_NO_VERIFY)
 AVRDUDE_FLAGS += $(AVRDUDE_VERBOSE)
 AVRDUDE_FLAGS += $(AVRDUDE_ERASE_COUNTER)
-
-
 
 #---------------- Debugging Options ----------------
 
@@ -252,11 +229,7 @@ DEBUG_PORT = 4242
 #     avarice is running on a different computer.
 DEBUG_HOST = localhost
 
-
-
 #============================================================================
-
-
 # Define programs and commands.
 SHELL = sh
 CC = avr-gcc
@@ -265,18 +238,18 @@ OBJDUMP = avr-objdump
 SIZE = avr-size
 NM = avr-nm
 AVRDUDE = avrdude
+# AVRDUDE = "/home/ops/.arduino15/packages/arduino/tools/avrdude/6.3.0-arduino17/bin/avrdude"
+BOOTLOADER = "./tools/optiboot_atmega328.hex"
 REMOVE = rm -f
 COPY = cp
 WINSHELL = cmd
-
-
 # Define Messages
 # English
 MSG_ERRORS_NONE = Errors: none
 MSG_BEGIN = -------- begin --------
 MSG_END = --------  end  --------
 MSG_SIZE_BEFORE = Size before: 
-MSG_SIZE_AFTER = Size after:
+MSG_SIZE_AFTER = Size:
 MSG_COFF = Converting to AVR COFF:
 MSG_EXTENDED_COFF = Converting to AVR Extended COFF:
 MSG_FLASH = Creating load file for Flash:
@@ -288,29 +261,17 @@ MSG_COMPILING = Compiling:
 MSG_ASSEMBLING = Assembling:
 MSG_CLEANING = Cleaning project:
 
-
-
-
 # Define all object files.
 OBJ = $(SRC:.c=.o) $(ASRC:.S=.o) 
 
 # Define all listing files.
 LST = $(SRC:.c=.lst) $(ASRC:.S=.lst) 
-
-
 # Compiler flags to generate dependency files.
 GENDEPFLAGS = -MD -MP -MF .dep/$(@F).d
-
-
 # Combine all necessary flags and optional flags.
 # Add target processor to flags.
 ALL_CFLAGS = -mmcu=$(MCU) -I. $(CFLAGS) $(GENDEPFLAGS)
 ALL_ASFLAGS = -mmcu=$(MCU) -I. -x assembler-with-cpp $(ASFLAGS)
-
-
-
-
-
 # Default target.
 all: begin gccversion sizebefore build sizeafter end
 
@@ -322,8 +283,6 @@ eep: $(TARGET).eep
 lss: $(TARGET).lss 
 sym: $(TARGET).sym
 
-
-
 # Eye candy.
 # AVR Studio 3.x does not check make's exit code but relies on
 # the following magic strings to be generated by the compile job.
@@ -334,11 +293,9 @@ begin:
 end:
 	@echo $(MSG_END)
 	@echo
-
-
-# Display size of file.
+	# Display size of file.
 HEXSIZE = $(SIZE) --target=$(FORMAT) $(TARGET).hex
-ELFSIZE = $(SIZE) -A $(TARGET).elf
+ELFSIZE = $(SIZE) --mcu=$(MCU) -C $(TARGET).elf
 AVRMEM = avr-mem.sh $(TARGET).elf $(MCU)
 
 sizebefore:
@@ -349,18 +306,23 @@ sizeafter:
 	@if test -f $(TARGET).elf; then echo; echo $(MSG_SIZE_AFTER); $(ELFSIZE); \
 	$(AVRMEM) 2>/dev/null; echo; fi
 
-
-
 # Display compiler version information.
-gccversion : 
+gccversion: 
 	@$(CC) --version
 
+# Fuse the device
+fuse:
+	$(AVRDUDE) $(AVRDUDE_FLAGS) -e -Ulfuse:w:0xff:m -Uhfuse:w:0xde:m -Uefuse:w:0xff:m -Ulock:w:0x0f:m  
 
+# Burn the bootloader
+bootloader:
+	$(AVRDUDE) $(AVRDUDE_FLAGS) -U flash:w:$(BOOTLOADER):i -Ulock:w:0x3f:m
 
 # Program the device.  
-program: $(TARGET).hex $(TARGET).eep
-	$(AVRDUDE) $(AVRDUDE_FLAGS) $(AVRDUDE_WRITE_FLASH) $(AVRDUDE_WRITE_EEPROM)
-
+# program: $(TARGET).hex $(TARGET).eep
+# 	$(AVRDUDE) $(AVRDUDE_FLAGS) $(AVRDUDE_WRITE_FLASH) $(AVRDUDE_WRITE_EEPROM)
+program: $(TARGET).hex
+	$(AVRDUDE) $(AVRDUDE_FLAGS) $(AVRDUDE_WRITE_FLASH)
 
 # Generate avr-gdb config/init file which does the following:
 #     define the reset signal, load the target file, connect to target, and set 
@@ -390,29 +352,20 @@ else
 endif
 	@$(WINSHELL) /c start avr-$(DEBUG_UI) --command=$(GDBINIT_FILE)
 	
-
-
-
 # Convert ELF to COFF for use in debugging / simulating in AVR Studio or VMLAB.
 COFFCONVERT=$(OBJCOPY) --debugging \
 --change-section-address .data-0x800000 \
 --change-section-address .bss-0x800000 \
 --change-section-address .noinit-0x800000 \
 --change-section-address .eeprom-0x810000 
-
-
 coff: $(TARGET).elf
 	@echo
 	@echo $(MSG_COFF) $(TARGET).cof
 	$(COFFCONVERT) -O coff-avr $< $(TARGET).cof
-
-
-extcoff: $(TARGET).elf
+	extcoff: $(TARGET).elf
 	@echo
 	@echo $(MSG_EXTENDED_COFF) $(TARGET).cof
 	$(COFFCONVERT) -O coff-ext-avr $< $(TARGET).cof
-
-
 
 # Create final output files (.hex, .eep) from ELF output file.
 %.hex: %.elf
@@ -438,8 +391,6 @@ extcoff: $(TARGET).elf
 	@echo $(MSG_SYMBOL_TABLE) $@
 	$(NM) -n $< > $@
 
-
-
 # Link: create ELF output file from object files.
 .SECONDARY : $(TARGET).elf
 .PRECIOUS : $(OBJ)
@@ -448,18 +399,15 @@ extcoff: $(TARGET).elf
 	@echo $(MSG_LINKING) $@
 	$(CC) $(ALL_CFLAGS) $^ --output $@ $(LDFLAGS)
 
-
 # Compile: create object files from C source files.
 %.o : %.c
 	@echo
 	@echo $(MSG_COMPILING) $<
 	$(CC) -c $(ALL_CFLAGS) $< -o $@ 
 
-
 # Compile: create assembler files from C source files.
 %.s : %.c
 	$(CC) -S $(ALL_CFLAGS) $< -o $@
-
 
 # Assemble: create object files from assembler source files.
 %.o : %.S
@@ -470,7 +418,6 @@ extcoff: $(TARGET).elf
 # Create preprocessed source for use in sending a bug report.
 %.i : %.c
 	$(CC) -E -mmcu=$(MCU) -I. $(CFLAGS) $< -o $@ 
-
 
 # Target: clean project.
 clean: begin clean_list end
@@ -491,14 +438,10 @@ clean_list :
 	$(REMOVE) $(SRC:.c=.d)
 	$(REMOVE) .dep/*
 
-
-
 # Include the dependency files.
 -include $(shell mkdir .dep 2>/dev/null) $(wildcard .dep/*)
-
 
 # Listing of phony targets.
 .PHONY : all begin finish end sizebefore sizeafter gccversion \
 build elf hex eep lss sym coff extcoff \
 clean clean_list program debug gdb-config
-

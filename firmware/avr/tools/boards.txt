@@ -1,0 +1,26 @@
+##############################################################
+
+vac.name=Vehicle Accessory Controller
+
+vac.vid.0=0xC0DE
+vac.pid.0=0xBABE
+
+vac.upload.tool=avrdude
+vac.upload.protocol=arduino
+vac.upload.maximum_size=32256
+vac.upload.maximum_data_size=2048
+vac.upload.speed=115200
+
+vac.bootloader.tool=avrdude
+vac.bootloader.low_fuses=0xFF
+vac.bootloader.high_fuses=0xDE
+vac.bootloader.extended_fuses=0xFF
+vac.bootloader.unlock_bits=0x3F
+vac.bootloader.lock_bits=0x0F
+vac.bootloader.file=optiboot/optiboot_atmega328.hex
+
+vac.build.mcu=atmega328p
+vac.build.f_cpu=16000000L
+vac.build.board=AVR_UNO
+vac.build.core=arduino
+vac.build.variant=standard

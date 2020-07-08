@@ -1,4 +1,4 @@
-obj-m = vehicleaccessorycontroller.o
+obj-m = cp210x_vehicle_accessory_controller.o
 KDIR = /lib/modules/`uname -r`/build
 SRCDIR = $(PWD)
 # try this instead if you don't have PWD defined

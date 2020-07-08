@@ -1,5 +1,6 @@
 #include <avr/io.h>
 #include <stdio.h>
+#include "uart.h"
 
 #ifndef F_CPU
 #define F_CPU 16000000UL
@@ -24,15 +25,16 @@ void uart_init(void) {
     UCSR0B = _BV(RXEN0) | _BV(TXEN0);   // Enable RX and TX
 }
 
-void uart_putchar(char c, FILE *stream) {
+static int uart_putchar(char c, FILE *stream) {
     if (c == '\n') {
         uart_putchar('\r', stream);
     }
     loop_until_bit_is_set(UCSR0A, UDRE0);
     UDR0 = c;
+    return 0;
 }
 
-char uart_getchar(FILE *stream) {
-    loop_until_bit_is_set(UCSR0A, RXC0);
-    return UDR0;
-}
+// char uart_getchar(FILE *stream) {
+//     loop_until_bit_is_set(UCSR0A, RXC0);
+//     return UDR0;
+// }

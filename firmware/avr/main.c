@@ -1,15 +1,28 @@
 /*
- * Vehicle Accessory Controller
- *
+ * Name: Vehicle Accessory Controller
+ * Author: Noctivore
+ * Description: AVR-C application code for Vehicle Accessory Controller
+ * Version 1.0
+ * Date: 8 July 2020
  */
 
  // Include headers
 #include <avr/power.h>
 #include <avr/sleep.h>
 #include <avr/interrupt.h>
+#include <avr/pgmspace.h>
 #include <stdio.h>
 #include "main.h"
-#include "uart.h"
+// #include "uart.h"
+
+#ifndef F_CPU
+#define F_CPU 16000000UL
+#endif
+
+#ifndef BAUD
+#define BAUD 115200
+#endif
+#include <util/setbaud.h>
 
 // Pin definitions
 #define PARK_FRONT   14 // A0
@@ -20,6 +33,41 @@
 #define POWER_STATUS 13
 #define ACC          2
 
+const char status[] PROGMEM = "System Status: OK";
+
+// URART initialization function
+void uart_init(void) {
+    UBRR0H = UBRRH_VALUE;
+    UBRR0L = UBRRL_VALUE;
+    
+#if USE_2X
+    UCSR0A |= _BV(U2X0);
+#else
+    UCSR0A &= ~(_BV(U2X0));
+#endif
+
+    UCSR0C = _BV(UCSZ01) | _BV(UCSZ00); // 8-bit data
+    UCSR0B = _BV(RXEN0) | _BV(TXEN0);   // Enable RX and TX
+}
+
+// UART putchar function
+static void uart_putchar(char c, FILE *stream) {
+    if (c == '\n') {
+        uart_putchar('\r', stream);
+    }
+    loop_until_bit_is_set(UCSR0A, UDRE0);
+    UDR0 = c;
+}
+
+// Setup stream
+static FILE uart_output = FDEV_SETUP_STREAM(uart_putchar, NULL, _FDEV_SETUP_WRITE);
+
+void USART_TxString_P(const char *data) {
+  while (pgm_read_byte(*data) != 0x00) {
+    putc(pgm_read_byte(*data++), &uart_output);
+  }
+}
+
 // Enable Park Mode
 void enableParkMode(void) {
   PORTC &= ~_BV(PORTC0); // digitalWrite(PARK_FRONT, LOW);
@@ -28,6 +76,7 @@ void enableParkMode(void) {
   PORTC &= ~_BV(PORTC3); // digitalWrite(PARK_REAR, LOW);
   // Turn PARK_STATUS LED ON
   PORTC |= _BV(PORTC4); // digitalWrite(PARK_STATUS, HIGH);
+  // puts_P(PSTR("Park Mode: Enabled")); // Print park mode status message
   puts("Park Mode: Enabled"); // Print park mode status message
 }
 
@@ -39,6 +88,7 @@ void disableParkMode(void) {
   PORTC |= _BV(PORTC3); // digitalWrite(PARK_REAR, HIGH);
   // Turn PARK_STATUS LED OFF
   PORTC &= ~_BV(PORTC4); // digitalWrite(PARK_STATUS, LOW);
+  // puts_P(PSTR("Park Mode: Disabled")); // Print park mode status message
   puts("Park Mode: Disabled"); // Print park mode status message
 }
 
@@ -57,12 +107,15 @@ int main(void) {
   // UART setup
   uart_init();
   stdout = &uart_output;
-  stdin  = &uart_input;
+  // stdin  = &uart_input;
 
   // Turn POWER_STATUS LED ON
   PORTB |= _BV(PORTB5); // digitalWrite(POWER_STATUS, HIGH);
   // Print system status message
-  puts("System Status: OK");
+  // printf_P(PSTR("System Status: OK"));
+  // puts_P(status);
+  USART_TxString_P(status);
+  // puts("System Status: OK");
  
  // Loop
   while(1) {
