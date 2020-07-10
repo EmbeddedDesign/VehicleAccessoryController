@@ -169,7 +169,7 @@ LDFLAGS += $(PRINTF_LIB) $(SCANF_LIB) $(MATH_LIB)
 #
 AVRDUDE_PROGRAMMER = arduino
 # AVRDUDE_PROGRAMMER = usbtiny
-# AVRDUDE_PROGRAMMER = avrispmkII
+# AVRDUDE_PROGRAMMER = stk500v2
 
 # avrdude configuration file location
 AVRDUDE_CONF = "./tools/avrdude.conf"
@@ -178,6 +178,7 @@ AVRDUDE_CONF = "./tools/avrdude.conf"
 # programmer connected to serial device\
 # AVRDUDE_PORT = /dev/ttyAMC0
 AVRDUDE_PORT = /dev/ttyUSB0
+# AVRDUDE_PORT = usb
 
 AVRDUDE_WRITE_FLASH = -U flash:w:$(TARGET).hex
 #AVRDUDE_WRITE_EEPROM = -U eeprom:w:$(TARGET).eep

@@ -6,9 +6,11 @@ main.o: main.c /usr/lib/avr/include/avr/power.h \
  /usr/lib/avr/include/avr/version.h /usr/lib/avr/include/avr/fuse.h \
  /usr/lib/avr/include/avr/lock.h /usr/lib/avr/include/avr/sleep.h \
  /usr/lib/avr/include/avr/interrupt.h /usr/lib/avr/include/avr/pgmspace.h \
- /usr/lib/gcc/avr/5.4.0/include/stddef.h /usr/lib/avr/include/stdio.h \
- /usr/lib/gcc/avr/5.4.0/include/stdarg.h main.h \
- /usr/lib/avr/include/util/setbaud.h
+ /usr/lib/gcc/avr/5.4.0/include/stddef.h \
+ /usr/lib/avr/include/util/delay.h \
+ /usr/lib/avr/include/util/delay_basic.h /usr/lib/avr/include/math.h \
+ /usr/lib/avr/include/stdio.h /usr/lib/gcc/avr/5.4.0/include/stdarg.h \
+ main.h /usr/lib/avr/include/util/setbaud.h
 
 /usr/lib/avr/include/avr/power.h:
 
@@ -41,6 +43,12 @@ main.o: main.c /usr/lib/avr/include/avr/power.h \
 /usr/lib/avr/include/avr/pgmspace.h:
 
 /usr/lib/gcc/avr/5.4.0/include/stddef.h:
+
+/usr/lib/avr/include/util/delay.h:
+
+/usr/lib/avr/include/util/delay_basic.h:
+
+/usr/lib/avr/include/math.h:
 
 /usr/lib/avr/include/stdio.h:
 
