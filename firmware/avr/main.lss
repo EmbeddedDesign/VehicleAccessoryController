@@ -3,31 +3,31 @@ main.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .data         0000000e  00800100  000002c6  0000035a  2**0
+  0 .data         0000000e  00800100  000002ca  0000035e  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  1 .text         000002c6  00000000  00000000  00000094  2**1
+  1 .text         000002ca  00000000  00000000  00000094  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .bss          00000006  0080010e  0080010e  00000368  2**0
+  2 .bss          00000006  0080010e  0080010e  0000036c  2**0
                   ALLOC
-  3 .comment      00000011  00000000  00000000  00000368  2**0
+  3 .comment      00000011  00000000  00000000  0000036c  2**0
                   CONTENTS, READONLY
-  4 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  0000037c  2**2
+  4 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  00000380  2**2
                   CONTENTS, READONLY
-  5 .debug_aranges 00000028  00000000  00000000  000003bc  2**0
+  5 .debug_aranges 00000028  00000000  00000000  000003c0  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_info   000009f3  00000000  00000000  000003e4  2**0
+  6 .debug_info   00000a00  00000000  00000000  000003e8  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_abbrev 000007f3  00000000  00000000  00000dd7  2**0
+  7 .debug_abbrev 000007e5  00000000  00000000  00000de8  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_line   00000276  00000000  00000000  000015ca  2**0
+  8 .debug_line   0000027d  00000000  00000000  000015cd  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_frame  000000d0  00000000  00000000  00001840  2**2
+  9 .debug_frame  000000d0  00000000  00000000  0000184c  2**2
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_str    00000417  00000000  00000000  00001910  2**0
+ 10 .debug_str    00000417  00000000  00000000  0000191c  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_loc    000001c9  00000000  00000000  00001d27  2**0
+ 11 .debug_loc    0000020f  00000000  00000000  00001d33  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_ranges 00000018  00000000  00000000  00001ef0  2**0
+ 12 .debug_ranges 00000018  00000000  00000000  00001f42  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -92,7 +92,7 @@ Disassembly of section .text:
   ae:	11 e0       	ldi	r17, 0x01	; 1
   b0:	a0 e0       	ldi	r26, 0x00	; 0
   b2:	b1 e0       	ldi	r27, 0x01	; 1
-  b4:	e6 ec       	ldi	r30, 0xC6	; 198
+  b4:	ea ec       	ldi	r30, 0xCA	; 202
   b6:	f2 e0       	ldi	r31, 0x02	; 2
   b8:	02 c0       	rjmp	.+4      	; 0xbe <__do_copy_data+0x10>
   ba:	05 90       	lpm	r0, Z+
@@ -115,7 +115,7 @@ Disassembly of section .text:
   d0:	b2 07       	cpc	r27, r18
   d2:	e1 f7       	brne	.-8      	; 0xcc <.do_clear_bss_loop>
   d4:	0e 94 e3 00 	call	0x1c6	; 0x1c6 <main>
-  d8:	0c 94 61 01 	jmp	0x2c2	; 0x2c2 <_exit>
+  d8:	0c 94 63 01 	jmp	0x2c6	; 0x2c6 <_exit>
 
 000000dc <__bad_interrupt>:
   dc:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
@@ -129,20 +129,20 @@ Disassembly of section .text:
 static int uart_putchar(char c, FILE *stream) {
   e0:	cf 93       	push	r28
   e2:	c8 2f       	mov	r28, r24
-    if (c == '\n') {
+  if (c == '\n') {
   e4:	8a 30       	cpi	r24, 0x0A	; 10
   e6:	19 f4       	brne	.+6      	; 0xee <uart_putchar+0xe>
-        uart_putchar('\r', stream);
+    uart_putchar('\r', stream);
   e8:	8d e0       	ldi	r24, 0x0D	; 13
   ea:	0e 94 70 00 	call	0xe0	; 0xe0 <uart_putchar>
-    }
-    loop_until_bit_is_set(UCSR0A, UDRE0);
+  }
+  loop_until_bit_is_set(UCSR0A, UDRE0);
   ee:	80 91 c0 00 	lds	r24, 0x00C0	; 0x8000c0 <__TEXT_REGION_LENGTH__+0x7e00c0>
   f2:	85 ff       	sbrs	r24, 5
   f4:	fc cf       	rjmp	.-8      	; 0xee <uart_putchar+0xe>
-    UDR0 = c;
+  UDR0 = c;
   f6:	c0 93 c6 00 	sts	0x00C6, r28	; 0x8000c6 <__TEXT_REGION_LENGTH__+0x7e00c6>
-    return 0;
+  return 0;
 }
   fa:	80 e0       	ldi	r24, 0x00	; 0
   fc:	90 e0       	ldi	r25, 0x00	; 0
@@ -200,7 +200,7 @@ void enableParkMode(void) {
   puts_P(enablePark); // Print park mode status message
  12e:	8c e7       	ldi	r24, 0x7C	; 124
  130:	90 e0       	ldi	r25, 0x00	; 0
- 132:	0e 94 30 01 	call	0x260	; 0x260 <puts_P>
+ 132:	0e 94 32 01 	call	0x264	; 0x264 <puts_P>
 	#else
 		//round up by default
 		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
@@ -235,7 +235,7 @@ void disableParkMode(void) {
   puts_P(disablePark); // Print park mode status message
  14e:	88 e6       	ldi	r24, 0x68	; 104
  150:	90 e0       	ldi	r25, 0x00	; 0
- 152:	0e 94 30 01 	call	0x260	; 0x260 <puts_P>
+ 152:	0e 94 32 01 	call	0x264	; 0x264 <puts_P>
  156:	8f e9       	ldi	r24, 0x9F	; 159
  158:	9f e0       	ldi	r25, 0x0F	; 15
  15a:	01 97       	sbiw	r24, 0x01	; 1
@@ -346,138 +346,143 @@ int main(void) {
   puts_P(status); // Print system status message
  1e8:	8f e8       	ldi	r24, 0x8F	; 143
  1ea:	90 e0       	ldi	r25, 0x00	; 0
- 1ec:	0e 94 30 01 	call	0x260	; 0x260 <puts_P>
+ 1ec:	0e 94 32 01 	call	0x264	; 0x264 <puts_P>
  1f0:	8f e9       	ldi	r24, 0x9F	; 159
  1f2:	9f e0       	ldi	r25, 0x0F	; 15
  1f4:	01 97       	sbiw	r24, 0x01	; 1
  1f6:	f1 f7       	brne	.-4      	; 0x1f4 <main+0x2e>
  1f8:	00 c0       	rjmp	.+0      	; 0x1fa <main+0x34>
  1fa:	00 00       	nop
+  _delay_ms(SERIAL_DELAY); // Wait for serial output to finish
+
+  // Enable park mode as default state
+  enableParkMode();
+ 1fc:	0e 94 92 00 	call	0x124	; 0x124 <enableParkMode>
     PCMSK2 |= _BV(PCINT18);
     // Enable Pin Change Interrupt 2 using the Pin Change Interrupt Control Register (PCICR)
     PCICR |= _BV(PCIE2);
 
     // Turn off brown-out enable in software
     MCUCR = _BV(BODS) | _BV(BODSE);
- 1fc:	20 e6       	ldi	r18, 0x60	; 96
+ 200:	20 e6       	ldi	r18, 0x60	; 96
     MCUCR = _BV(BODS);
- 1fe:	90 e4       	ldi	r25, 0x40	; 64
-  _delay_ms(SERIAL_DELAY); // Wait for serial output to finish
- 
- // Loop
+ 202:	90 e4       	ldi	r25, 0x40	; 64
+  enableParkMode();
+
+  // Loop
   while(1) {
     // Power saving
     power_adc_disable ();
- 200:	80 91 64 00 	lds	r24, 0x0064	; 0x800064 <__TEXT_REGION_LENGTH__+0x7e0064>
- 204:	81 60       	ori	r24, 0x01	; 1
- 206:	80 93 64 00 	sts	0x0064, r24	; 0x800064 <__TEXT_REGION_LENGTH__+0x7e0064>
+ 204:	80 91 64 00 	lds	r24, 0x0064	; 0x800064 <__TEXT_REGION_LENGTH__+0x7e0064>
+ 208:	81 60       	ori	r24, 0x01	; 1
+ 20a:	80 93 64 00 	sts	0x0064, r24	; 0x800064 <__TEXT_REGION_LENGTH__+0x7e0064>
     power_spi_disable();
- 20a:	80 91 64 00 	lds	r24, 0x0064	; 0x800064 <__TEXT_REGION_LENGTH__+0x7e0064>
- 20e:	84 60       	ori	r24, 0x04	; 4
- 210:	80 93 64 00 	sts	0x0064, r24	; 0x800064 <__TEXT_REGION_LENGTH__+0x7e0064>
+ 20e:	80 91 64 00 	lds	r24, 0x0064	; 0x800064 <__TEXT_REGION_LENGTH__+0x7e0064>
+ 212:	84 60       	ori	r24, 0x04	; 4
+ 214:	80 93 64 00 	sts	0x0064, r24	; 0x800064 <__TEXT_REGION_LENGTH__+0x7e0064>
     power_twi_disable();
- 214:	80 91 64 00 	lds	r24, 0x0064	; 0x800064 <__TEXT_REGION_LENGTH__+0x7e0064>
- 218:	80 68       	ori	r24, 0x80	; 128
- 21a:	80 93 64 00 	sts	0x0064, r24	; 0x800064 <__TEXT_REGION_LENGTH__+0x7e0064>
+ 218:	80 91 64 00 	lds	r24, 0x0064	; 0x800064 <__TEXT_REGION_LENGTH__+0x7e0064>
+ 21c:	80 68       	ori	r24, 0x80	; 128
+ 21e:	80 93 64 00 	sts	0x0064, r24	; 0x800064 <__TEXT_REGION_LENGTH__+0x7e0064>
     power_timer1_disable();
- 21e:	80 91 64 00 	lds	r24, 0x0064	; 0x800064 <__TEXT_REGION_LENGTH__+0x7e0064>
- 222:	88 60       	ori	r24, 0x08	; 8
- 224:	80 93 64 00 	sts	0x0064, r24	; 0x800064 <__TEXT_REGION_LENGTH__+0x7e0064>
+ 222:	80 91 64 00 	lds	r24, 0x0064	; 0x800064 <__TEXT_REGION_LENGTH__+0x7e0064>
+ 226:	88 60       	ori	r24, 0x08	; 8
+ 228:	80 93 64 00 	sts	0x0064, r24	; 0x800064 <__TEXT_REGION_LENGTH__+0x7e0064>
     power_timer2_disable();
- 228:	80 91 64 00 	lds	r24, 0x0064	; 0x800064 <__TEXT_REGION_LENGTH__+0x7e0064>
- 22c:	80 64       	ori	r24, 0x40	; 64
- 22e:	80 93 64 00 	sts	0x0064, r24	; 0x800064 <__TEXT_REGION_LENGTH__+0x7e0064>
+ 22c:	80 91 64 00 	lds	r24, 0x0064	; 0x800064 <__TEXT_REGION_LENGTH__+0x7e0064>
+ 230:	80 64       	ori	r24, 0x40	; 64
+ 232:	80 93 64 00 	sts	0x0064, r24	; 0x800064 <__TEXT_REGION_LENGTH__+0x7e0064>
 
     // Configure sleep
     set_sleep_mode(SLEEP_MODE_PWR_DOWN);
- 232:	83 b7       	in	r24, 0x33	; 51
- 234:	81 7f       	andi	r24, 0xF1	; 241
- 236:	84 60       	ori	r24, 0x04	; 4
- 238:	83 bf       	out	0x33, r24	; 51
+ 236:	83 b7       	in	r24, 0x33	; 51
+ 238:	81 7f       	andi	r24, 0xF1	; 241
+ 23a:	84 60       	ori	r24, 0x04	; 4
+ 23c:	83 bf       	out	0x33, r24	; 51
     sleep_enable();
- 23a:	83 b7       	in	r24, 0x33	; 51
- 23c:	81 60       	ori	r24, 0x01	; 1
- 23e:	83 bf       	out	0x33, r24	; 51
+ 23e:	83 b7       	in	r24, 0x33	; 51
+ 240:	81 60       	ori	r24, 0x01	; 1
+ 242:	83 bf       	out	0x33, r24	; 51
 
     // Do not interrupt before to sleep or ISR will detach interrupts won't wake.
     cli();
- 240:	f8 94       	cli
+ 244:	f8 94       	cli
 
     // Interrupt init
     // Enable Pin Change Interrupt on the PCINT18 pin using Pin Change Mask Register 2 (PCMSK2)
     PCMSK2 |= _BV(PCINT18);
- 242:	80 91 6d 00 	lds	r24, 0x006D	; 0x80006d <__TEXT_REGION_LENGTH__+0x7e006d>
- 246:	84 60       	ori	r24, 0x04	; 4
- 248:	80 93 6d 00 	sts	0x006D, r24	; 0x80006d <__TEXT_REGION_LENGTH__+0x7e006d>
+ 246:	80 91 6d 00 	lds	r24, 0x006D	; 0x80006d <__TEXT_REGION_LENGTH__+0x7e006d>
+ 24a:	84 60       	ori	r24, 0x04	; 4
+ 24c:	80 93 6d 00 	sts	0x006D, r24	; 0x80006d <__TEXT_REGION_LENGTH__+0x7e006d>
     // Enable Pin Change Interrupt 2 using the Pin Change Interrupt Control Register (PCICR)
     PCICR |= _BV(PCIE2);
- 24c:	80 91 68 00 	lds	r24, 0x0068	; 0x800068 <__TEXT_REGION_LENGTH__+0x7e0068>
- 250:	84 60       	ori	r24, 0x04	; 4
- 252:	80 93 68 00 	sts	0x0068, r24	; 0x800068 <__TEXT_REGION_LENGTH__+0x7e0068>
+ 250:	80 91 68 00 	lds	r24, 0x0068	; 0x800068 <__TEXT_REGION_LENGTH__+0x7e0068>
+ 254:	84 60       	ori	r24, 0x04	; 4
+ 256:	80 93 68 00 	sts	0x0068, r24	; 0x800068 <__TEXT_REGION_LENGTH__+0x7e0068>
 
     // Turn off brown-out enable in software
     MCUCR = _BV(BODS) | _BV(BODSE);
- 256:	25 bf       	out	0x35, r18	; 53
+ 25a:	25 bf       	out	0x35, r18	; 53
     MCUCR = _BV(BODS);
- 258:	95 bf       	out	0x35, r25	; 53
+ 25c:	95 bf       	out	0x35, r25	; 53
 
     // Enable interrupts
     sei();
- 25a:	78 94       	sei
+ 25e:	78 94       	sei
     // Guaranteed sleep_cpu call will be done as CPU executes next instruction after interrupts enabled
     sleep_cpu();
- 25c:	88 95       	sleep
- 25e:	d0 cf       	rjmp	.-96     	; 0x200 <main+0x3a>
+ 260:	88 95       	sleep
+ 262:	d0 cf       	rjmp	.-96     	; 0x204 <main+0x3e>
 
-00000260 <puts_P>:
- 260:	0f 93       	push	r16
- 262:	1f 93       	push	r17
- 264:	cf 93       	push	r28
- 266:	df 93       	push	r29
- 268:	8c 01       	movw	r16, r24
- 26a:	e0 91 10 01 	lds	r30, 0x0110	; 0x800110 <__data_end+0x2>
- 26e:	f0 91 11 01 	lds	r31, 0x0111	; 0x800111 <__data_end+0x3>
- 272:	83 81       	ldd	r24, Z+3	; 0x03
- 274:	81 ff       	sbrs	r24, 1
- 276:	1b c0       	rjmp	.+54     	; 0x2ae <puts_P+0x4e>
- 278:	d0 e0       	ldi	r29, 0x00	; 0
- 27a:	c0 e0       	ldi	r28, 0x00	; 0
- 27c:	f8 01       	movw	r30, r16
- 27e:	84 91       	lpm	r24, Z
- 280:	60 91 10 01 	lds	r22, 0x0110	; 0x800110 <__data_end+0x2>
- 284:	70 91 11 01 	lds	r23, 0x0111	; 0x800111 <__data_end+0x3>
- 288:	db 01       	movw	r26, r22
- 28a:	18 96       	adiw	r26, 0x08	; 8
- 28c:	ed 91       	ld	r30, X+
- 28e:	fc 91       	ld	r31, X
- 290:	19 97       	sbiw	r26, 0x09	; 9
- 292:	88 23       	and	r24, r24
- 294:	41 f0       	breq	.+16     	; 0x2a6 <puts_P+0x46>
- 296:	09 95       	icall
- 298:	89 2b       	or	r24, r25
- 29a:	11 f0       	breq	.+4      	; 0x2a0 <puts_P+0x40>
- 29c:	df ef       	ldi	r29, 0xFF	; 255
- 29e:	cf ef       	ldi	r28, 0xFF	; 255
- 2a0:	0f 5f       	subi	r16, 0xFF	; 255
- 2a2:	1f 4f       	sbci	r17, 0xFF	; 255
- 2a4:	eb cf       	rjmp	.-42     	; 0x27c <puts_P+0x1c>
- 2a6:	8a e0       	ldi	r24, 0x0A	; 10
- 2a8:	09 95       	icall
- 2aa:	89 2b       	or	r24, r25
- 2ac:	19 f0       	breq	.+6      	; 0x2b4 <puts_P+0x54>
- 2ae:	8f ef       	ldi	r24, 0xFF	; 255
- 2b0:	9f ef       	ldi	r25, 0xFF	; 255
- 2b2:	02 c0       	rjmp	.+4      	; 0x2b8 <puts_P+0x58>
- 2b4:	8d 2f       	mov	r24, r29
- 2b6:	9c 2f       	mov	r25, r28
- 2b8:	df 91       	pop	r29
- 2ba:	cf 91       	pop	r28
- 2bc:	1f 91       	pop	r17
- 2be:	0f 91       	pop	r16
- 2c0:	08 95       	ret
+00000264 <puts_P>:
+ 264:	0f 93       	push	r16
+ 266:	1f 93       	push	r17
+ 268:	cf 93       	push	r28
+ 26a:	df 93       	push	r29
+ 26c:	8c 01       	movw	r16, r24
+ 26e:	e0 91 10 01 	lds	r30, 0x0110	; 0x800110 <__data_end+0x2>
+ 272:	f0 91 11 01 	lds	r31, 0x0111	; 0x800111 <__data_end+0x3>
+ 276:	83 81       	ldd	r24, Z+3	; 0x03
+ 278:	81 ff       	sbrs	r24, 1
+ 27a:	1b c0       	rjmp	.+54     	; 0x2b2 <puts_P+0x4e>
+ 27c:	d0 e0       	ldi	r29, 0x00	; 0
+ 27e:	c0 e0       	ldi	r28, 0x00	; 0
+ 280:	f8 01       	movw	r30, r16
+ 282:	84 91       	lpm	r24, Z
+ 284:	60 91 10 01 	lds	r22, 0x0110	; 0x800110 <__data_end+0x2>
+ 288:	70 91 11 01 	lds	r23, 0x0111	; 0x800111 <__data_end+0x3>
+ 28c:	db 01       	movw	r26, r22
+ 28e:	18 96       	adiw	r26, 0x08	; 8
+ 290:	ed 91       	ld	r30, X+
+ 292:	fc 91       	ld	r31, X
+ 294:	19 97       	sbiw	r26, 0x09	; 9
+ 296:	88 23       	and	r24, r24
+ 298:	41 f0       	breq	.+16     	; 0x2aa <puts_P+0x46>
+ 29a:	09 95       	icall
+ 29c:	89 2b       	or	r24, r25
+ 29e:	11 f0       	breq	.+4      	; 0x2a4 <puts_P+0x40>
+ 2a0:	df ef       	ldi	r29, 0xFF	; 255
+ 2a2:	cf ef       	ldi	r28, 0xFF	; 255
+ 2a4:	0f 5f       	subi	r16, 0xFF	; 255
+ 2a6:	1f 4f       	sbci	r17, 0xFF	; 255
+ 2a8:	eb cf       	rjmp	.-42     	; 0x280 <puts_P+0x1c>
+ 2aa:	8a e0       	ldi	r24, 0x0A	; 10
+ 2ac:	09 95       	icall
+ 2ae:	89 2b       	or	r24, r25
+ 2b0:	19 f0       	breq	.+6      	; 0x2b8 <puts_P+0x54>
+ 2b2:	8f ef       	ldi	r24, 0xFF	; 255
+ 2b4:	9f ef       	ldi	r25, 0xFF	; 255
+ 2b6:	02 c0       	rjmp	.+4      	; 0x2bc <puts_P+0x58>
+ 2b8:	8d 2f       	mov	r24, r29
+ 2ba:	9c 2f       	mov	r25, r28
+ 2bc:	df 91       	pop	r29
+ 2be:	cf 91       	pop	r28
+ 2c0:	1f 91       	pop	r17
+ 2c2:	0f 91       	pop	r16
+ 2c4:	08 95       	ret
 
-000002c2 <_exit>:
- 2c2:	f8 94       	cli
+000002c6 <_exit>:
+ 2c6:	f8 94       	cli
 
-000002c4 <__stop_program>:
- 2c4:	ff cf       	rjmp	.-2      	; 0x2c4 <__stop_program>
+000002c8 <__stop_program>:
+ 2c8:	ff cf       	rjmp	.-2      	; 0x2c8 <__stop_program>

@@ -6,7 +6,7 @@
  * Date: 9 July 2020
  */
 
- // Include headers
+// Include headers
 #include <avr/power.h>
 #include <avr/sleep.h>
 #include <avr/interrupt.h>
@@ -58,12 +58,12 @@ void uart_init(void) {
 
 // UART putchar function
 static int uart_putchar(char c, FILE *stream) {
-    if (c == '\n') {
-        uart_putchar('\r', stream);
-    }
-    loop_until_bit_is_set(UCSR0A, UDRE0);
-    UDR0 = c;
-    return 0;
+  if (c == '\n') {
+    uart_putchar('\r', stream);
+  }
+  loop_until_bit_is_set(UCSR0A, UDRE0);
+  UDR0 = c;
+  return 0;
 }
 
 // Setup UART stream
@@ -113,8 +113,11 @@ int main(void) {
   PORTB |= _BV(PORTB5); // digitalWrite(POWER_STATUS, HIGH);
   puts_P(status); // Print system status message
   _delay_ms(SERIAL_DELAY); // Wait for serial output to finish
- 
- // Loop
+
+  // Enable park mode as default state
+  enableParkMode();
+
+  // Loop
   while(1) {
     // Power saving
     power_adc_disable ();
