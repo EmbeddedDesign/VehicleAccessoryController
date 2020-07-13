@@ -167,18 +167,20 @@ LDFLAGS += $(PRINTF_LIB) $(SCANF_LIB) $(MATH_LIB)
 # Type: avrdude -c ?
 # to get a full listing.
 #
-# AVRDUDE_PROGRAMMER = arduino
+AVRDUDE_PROGRAMMER = arduino
 # AVRDUDE_PROGRAMMER = usbtiny
-AVRDUDE_PROGRAMMER = stk500v2
+# AVRDUDE_PROGRAMMER = stk500v2
 
 # avrdude configuration file location
-AVRDUDE_CONF = "./tools/avrdude.conf"
+# AVRDUDE_CONF = "./tools/avrdude.conf"
+AVRDUDE_CONF = "/Applications/Arduino.app/Contents/Java/hardware/tools/avr/etc/avrdude.conf"
 
 # com1 = serial port. Use lpt1 to connect to parallel port.
 # programmer connected to serial device\
 # AVRDUDE_PORT = /dev/ttyAMC0
 # AVRDUDE_PORT = /dev/ttyUSB0
-AVRDUDE_PORT = usb
+# AVRDUDE_PORT = usb
+AVRDUDE_PORT = /dev/cu.usbserial-_______
 
 AVRDUDE_WRITE_FLASH = -U flash:w:$(TARGET).hex
 #AVRDUDE_WRITE_EEPROM = -U eeprom:w:$(TARGET).eep
@@ -199,6 +201,7 @@ AVRDUDE_WRITE_FLASH = -U flash:w:$(TARGET).hex
 
 AVRDUDE_FLAGS = -v -p$(MCU) -c$(AVRDUDE_PROGRAMMER) -P$(AVRDUDE_PORT) -b 115200
 # AVRDUDE_FLAGS = -v -p$(MCU) -c$(AVRDUDE_PROGRAMMER) -C$(AVRDUDE_CONF) -P$(AVRDUDE_PORT) -b 115200
+AVRDUDE_FLAGS += -C$(AVRDUDE_CONF)
 AVRDUDE_FLAGS += $(AVRDUDE_NO_VERIFY)
 AVRDUDE_FLAGS += $(AVRDUDE_VERBOSE)
 AVRDUDE_FLAGS += $(AVRDUDE_ERASE_COUNTER)
@@ -232,13 +235,15 @@ DEBUG_HOST = localhost
 
 #============================================================================
 # Define programs and commands.
+TOOL_PATH = /Applications/Arduino.app/Contents/Java/hardware/tools/avr/bin/
+# TOOL_PATH = ""
 SHELL = sh
-CC = avr-gcc
-OBJCOPY = avr-objcopy
-OBJDUMP = avr-objdump
-SIZE = avr-size
-NM = avr-nm
-AVRDUDE = avrdude
+CC = $(TOOL_PATH)avr-gcc
+OBJCOPY = $(TOOL_PATH)avr-objcopy
+OBJDUMP = $(TOOL_PATH)avr-objdump
+SIZE = $(TOOL_PATH)avr-size
+NM = $(TOOL_PATH)avr-nm
+AVRDUDE = $(TOOL_PATH)avrdude
 # AVRDUDE = "/home/ops/.arduino15/packages/arduino/tools/avrdude/6.3.0-arduino17/bin/avrdude"
 BOOTLOADER = "./tools/optiboot_atmega328.hex"
 REMOVE = rm -f
@@ -323,7 +328,7 @@ bootloader:
 # program: $(TARGET).hex $(TARGET).eep
 # 	$(AVRDUDE) $(AVRDUDE_FLAGS) $(AVRDUDE_WRITE_FLASH) $(AVRDUDE_WRITE_EEPROM)
 program: $(TARGET).hex
-	$(AVRDUDE) $(AVRDUDE_FLAGS) $(AVRDUDE_WRITE_FLASH)
+	$(AVRDUDE) $(AVRDUDE_FLAGS) -D $(AVRDUDE_WRITE_FLASH)
 
 # Generate avr-gdb config/init file which does the following:
 #     define the reset signal, load the target file, connect to target, and set 

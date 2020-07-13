@@ -1,59 +1,70 @@
-main.o: main.c /usr/lib/avr/include/avr/power.h \
- /usr/lib/avr/include/avr/io.h /usr/lib/avr/include/avr/sfr_defs.h \
- /usr/lib/avr/include/inttypes.h /usr/lib/gcc/avr/5.4.0/include/stdint.h \
- /usr/lib/avr/include/stdint.h /usr/lib/avr/include/avr/iom328p.h \
- /usr/lib/avr/include/avr/portpins.h /usr/lib/avr/include/avr/common.h \
- /usr/lib/avr/include/avr/version.h /usr/lib/avr/include/avr/fuse.h \
- /usr/lib/avr/include/avr/lock.h /usr/lib/avr/include/avr/sleep.h \
- /usr/lib/avr/include/avr/interrupt.h /usr/lib/avr/include/avr/pgmspace.h \
- /usr/lib/gcc/avr/5.4.0/include/stddef.h \
- /usr/lib/avr/include/util/delay.h \
- /usr/lib/avr/include/util/delay_basic.h /usr/lib/avr/include/math.h \
- /usr/lib/avr/include/stdio.h /usr/lib/gcc/avr/5.4.0/include/stdarg.h \
- main.h /usr/lib/avr/include/util/setbaud.h
+main.o: main.c \
+ /Applications/Arduino.app/Contents/Java/hardware/tools/avr/avr/include/avr/power.h \
+ /Applications/Arduino.app/Contents/Java/hardware/tools/avr/avr/include/avr/io.h \
+ /Applications/Arduino.app/Contents/Java/hardware/tools/avr/avr/include/avr/sfr_defs.h \
+ /Applications/Arduino.app/Contents/Java/hardware/tools/avr/avr/include/inttypes.h \
+ /Applications/Arduino.app/Contents/Java/hardware/tools/avr/lib/gcc/avr/7.3.0/include/stdint.h \
+ /Applications/Arduino.app/Contents/Java/hardware/tools/avr/avr/include/stdint.h \
+ /Applications/Arduino.app/Contents/Java/hardware/tools/avr/avr/include/avr/iom328p.h \
+ /Applications/Arduino.app/Contents/Java/hardware/tools/avr/avr/include/avr/portpins.h \
+ /Applications/Arduino.app/Contents/Java/hardware/tools/avr/avr/include/avr/common.h \
+ /Applications/Arduino.app/Contents/Java/hardware/tools/avr/avr/include/avr/version.h \
+ /Applications/Arduino.app/Contents/Java/hardware/tools/avr/avr/include/avr/fuse.h \
+ /Applications/Arduino.app/Contents/Java/hardware/tools/avr/avr/include/avr/lock.h \
+ /Applications/Arduino.app/Contents/Java/hardware/tools/avr/avr/include/avr/sleep.h \
+ /Applications/Arduino.app/Contents/Java/hardware/tools/avr/avr/include/avr/interrupt.h \
+ /Applications/Arduino.app/Contents/Java/hardware/tools/avr/avr/include/avr/pgmspace.h \
+ /Applications/Arduino.app/Contents/Java/hardware/tools/avr/lib/gcc/avr/7.3.0/include/stddef.h \
+ /Applications/Arduino.app/Contents/Java/hardware/tools/avr/avr/include/util/delay.h \
+ /Applications/Arduino.app/Contents/Java/hardware/tools/avr/avr/include/util/delay_basic.h \
+ /Applications/Arduino.app/Contents/Java/hardware/tools/avr/avr/include/math.h \
+ /Applications/Arduino.app/Contents/Java/hardware/tools/avr/avr/include/stdio.h \
+ /Applications/Arduino.app/Contents/Java/hardware/tools/avr/lib/gcc/avr/7.3.0/include/stdarg.h \
+ main.h \
+ /Applications/Arduino.app/Contents/Java/hardware/tools/avr/avr/include/util/setbaud.h
 
-/usr/lib/avr/include/avr/power.h:
+/Applications/Arduino.app/Contents/Java/hardware/tools/avr/avr/include/avr/power.h:
 
-/usr/lib/avr/include/avr/io.h:
+/Applications/Arduino.app/Contents/Java/hardware/tools/avr/avr/include/avr/io.h:
 
-/usr/lib/avr/include/avr/sfr_defs.h:
+/Applications/Arduino.app/Contents/Java/hardware/tools/avr/avr/include/avr/sfr_defs.h:
 
-/usr/lib/avr/include/inttypes.h:
+/Applications/Arduino.app/Contents/Java/hardware/tools/avr/avr/include/inttypes.h:
 
-/usr/lib/gcc/avr/5.4.0/include/stdint.h:
+/Applications/Arduino.app/Contents/Java/hardware/tools/avr/lib/gcc/avr/7.3.0/include/stdint.h:
 
-/usr/lib/avr/include/stdint.h:
+/Applications/Arduino.app/Contents/Java/hardware/tools/avr/avr/include/stdint.h:
 
-/usr/lib/avr/include/avr/iom328p.h:
+/Applications/Arduino.app/Contents/Java/hardware/tools/avr/avr/include/avr/iom328p.h:
 
-/usr/lib/avr/include/avr/portpins.h:
+/Applications/Arduino.app/Contents/Java/hardware/tools/avr/avr/include/avr/portpins.h:
 
-/usr/lib/avr/include/avr/common.h:
+/Applications/Arduino.app/Contents/Java/hardware/tools/avr/avr/include/avr/common.h:
 
-/usr/lib/avr/include/avr/version.h:
+/Applications/Arduino.app/Contents/Java/hardware/tools/avr/avr/include/avr/version.h:
 
-/usr/lib/avr/include/avr/fuse.h:
+/Applications/Arduino.app/Contents/Java/hardware/tools/avr/avr/include/avr/fuse.h:
 
-/usr/lib/avr/include/avr/lock.h:
+/Applications/Arduino.app/Contents/Java/hardware/tools/avr/avr/include/avr/lock.h:
 
-/usr/lib/avr/include/avr/sleep.h:
+/Applications/Arduino.app/Contents/Java/hardware/tools/avr/avr/include/avr/sleep.h:
 
-/usr/lib/avr/include/avr/interrupt.h:
+/Applications/Arduino.app/Contents/Java/hardware/tools/avr/avr/include/avr/interrupt.h:
 
-/usr/lib/avr/include/avr/pgmspace.h:
+/Applications/Arduino.app/Contents/Java/hardware/tools/avr/avr/include/avr/pgmspace.h:
 
-/usr/lib/gcc/avr/5.4.0/include/stddef.h:
+/Applications/Arduino.app/Contents/Java/hardware/tools/avr/lib/gcc/avr/7.3.0/include/stddef.h:
 
-/usr/lib/avr/include/util/delay.h:
+/Applications/Arduino.app/Contents/Java/hardware/tools/avr/avr/include/util/delay.h:
 
-/usr/lib/avr/include/util/delay_basic.h:
+/Applications/Arduino.app/Contents/Java/hardware/tools/avr/avr/include/util/delay_basic.h:
 
-/usr/lib/avr/include/math.h:
+/Applications/Arduino.app/Contents/Java/hardware/tools/avr/avr/include/math.h:
 
-/usr/lib/avr/include/stdio.h:
+/Applications/Arduino.app/Contents/Java/hardware/tools/avr/avr/include/stdio.h:
 
-/usr/lib/gcc/avr/5.4.0/include/stdarg.h:
+/Applications/Arduino.app/Contents/Java/hardware/tools/avr/lib/gcc/avr/7.3.0/include/stdarg.h:
 
 main.h:
 
-/usr/lib/avr/include/util/setbaud.h:
+/Applications/Arduino.app/Contents/Java/hardware/tools/avr/avr/include/util/setbaud.h:

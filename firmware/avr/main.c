@@ -25,7 +25,7 @@
 #endif
 #include <util/setbaud.h>
 
-#define SERIAL_DELAY 1
+#define SERIAL_DELAY 10
 
 // Pin definitions
 #define PARK_FRONT   14 // A0
@@ -115,7 +115,7 @@ int main(void) {
   _delay_ms(SERIAL_DELAY); // Wait for serial output to finish
 
   // Enable park mode as default state
-  enableParkMode();
+  disableParkMode();
 
   // Loop
   while(1) {
